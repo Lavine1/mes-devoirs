@@ -9,405 +9,154 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #F7F5F0;
-    --surface: #FFFFFF;
-    --text: #1a1a18;
-    --text-muted: #8a8880;
-    --border: rgba(0,0,0,0.07);
-    --radius: 18px;
-    --radius-sm: 10px;
-
-    --c1: #E8DFF5; --c1t: #5B3F8A;
-    --c2: #D6EEE4; --c2t: #2A6B4F;
-    --c3: #FDE8D8; --c3t: #A04A1A;
-    --c4: #DAEAF8; --c4t: #1F5480;
-    --c5: #F5E6E8; --c5t: #8A2C3A;
-    --c6: #E2EDD6; --c6t: #3A5E1F;
-    --c7: #FFF0D6; --c7t: #8A5A00;
-    --c8: #E0EAF0; --c8t: #2A4A60;
+    --bg: #F7F5F0; --surface: #FFFFFF; --text: #1a1a18; --text-muted: #8a8880;
+    --border: rgba(0,0,0,0.07); --radius: 18px; --radius-sm: 10px;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-  }
-
-  /* NAV */
-  nav {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(247,245,240,0.85);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-    padding: 0 24px;
-    display: flex; align-items: center; gap: 0;
-    height: 56px;
-  }
-  .nav-logo {
-    font-family: 'DM Serif Display', serif;
-    font-size: 20px;
-    color: var(--text);
-    margin-right: auto;
-    letter-spacing: -0.3px;
-  }
-  .nav-tabs {
-    display: flex; gap: 2px;
-    background: var(--border);
-    border-radius: 10px;
-    padding: 3px;
-  }
-  .nav-tab {
-    padding: 6px 16px;
-    border-radius: 8px;
-    font-size: 13px;
-    font-weight: 400;
-    cursor: pointer;
-    border: none;
-    background: transparent;
-    color: var(--text-muted);
-    transition: all .18s;
-  }
-  .nav-tab.active {
-    background: var(--surface);
-    color: var(--text);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-  }
-
-  /* MAIN */
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+  nav { position: sticky; top: 0; z-index: 100; background: rgba(247,245,240,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 24px; display: flex; align-items: center; height: 56px; }
+  .nav-logo { font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--text); margin-right: auto; letter-spacing: -0.3px; }
+  .nav-tabs { display: flex; gap: 2px; background: var(--border); border-radius: 10px; padding: 3px; }
+  .nav-tab { padding: 6px 16px; border-radius: 8px; font-size: 13px; cursor: pointer; border: none; background: transparent; color: var(--text-muted); transition: all .18s; }
+  .nav-tab.active { background: var(--surface); color: var(--text); box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
   main { max-width: 960px; margin: 0 auto; padding: 32px 24px 80px; }
-
-  /* VIEWS */
-  .view { display: none; }
-  .view.active { display: block; }
-
-  /* PAGE HEADER */
-  .page-header {
-    display: flex; align-items: flex-end; justify-content: space-between;
-    margin-bottom: 28px;
-  }
-  .page-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: 32px;
-    letter-spacing: -0.5px;
-    line-height: 1.1;
-  }
+  .view { display: none; } .view.active { display: block; }
+  .page-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 28px; }
+  .page-title { font-family: 'DM Serif Display', serif; font-size: 32px; letter-spacing: -0.5px; line-height: 1.1; }
   .page-sub { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
-
-  /* BTN */
-  .btn {
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 9px 18px;
-    border-radius: var(--radius-sm);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    border: none;
-    transition: all .15s;
-  }
-  .btn-primary {
-    background: var(--text);
-    color: #fff;
-  }
-  .btn-primary:hover { opacity: .85; }
-  .btn-ghost {
-    background: transparent;
-    color: var(--text-muted);
-    border: 1px solid var(--border);
-  }
-  .btn-ghost:hover { background: var(--surface); color: var(--text); }
+  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 9px 18px; border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; border: none; transition: all .15s; }
+  .btn-primary { background: var(--text); color: #fff; } .btn-primary:hover { opacity: .85; }
+  .btn-ghost { background: transparent; color: var(--text-muted); border: 1px solid var(--border); } .btn-ghost:hover { background: var(--surface); color: var(--text); }
   .btn-sm { padding: 6px 12px; font-size: 12px; }
-
-  /* MATIERES GRID */
-  .matieres-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 14px;
-  }
-  .matiere-card {
-    border-radius: var(--radius);
-    padding: 22px 22px 18px;
-    cursor: pointer;
-    transition: transform .18s, box-shadow .18s;
-    position: relative;
-    overflow: hidden;
-  }
+  .matieres-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+  .matiere-card { border-radius: var(--radius); padding: 22px 22px 18px; cursor: pointer; transition: transform .18s, box-shadow .18s; }
   .matiere-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
-  .matiere-card-top {
-    display: flex; justify-content: space-between; align-items: flex-start;
-    margin-bottom: 14px;
-  }
+  .matiere-card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
   .matiere-emoji { font-size: 28px; line-height: 1; }
-  .matiere-coeff {
-    font-size: 11px; font-weight: 500;
-    padding: 3px 8px;
-    border-radius: 20px;
-    background: rgba(0,0,0,0.07);
-    color: inherit;
-  }
-  .matiere-name {
-    font-family: 'DM Serif Display', serif;
-    font-size: 18px;
-    letter-spacing: -0.3px;
-    margin-bottom: 3px;
-    line-height: 1.2;
-  }
+  .matiere-coeff { font-size: 11px; font-weight: 500; padding: 3px 8px; border-radius: 20px; background: rgba(0,0,0,0.07); }
+  .matiere-name { font-family: 'DM Serif Display', serif; font-size: 18px; letter-spacing: -0.3px; margin-bottom: 3px; line-height: 1.2; }
   .matiere-prof { font-size: 12px; opacity: .6; margin-bottom: 14px; }
-  .matiere-stats {
-    display: flex; gap: 10px;
-    padding-top: 12px;
-    border-top: 1px solid rgba(0,0,0,0.08);
-  }
-  .matiere-stat { font-size: 12px; }
-  .matiere-stat strong { display: block; font-size: 16px; font-weight: 500; }
-
-  .add-matiere-card {
-    border-radius: var(--radius);
-    border: 2px dashed var(--border);
-    padding: 22px;
-    cursor: pointer;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-    color: var(--text-muted);
-    font-size: 14px;
-    transition: all .18s;
-    min-height: 160px;
-  }
+  .matiere-stats { display: flex; gap: 10px; padding-top: 12px; border-top: 1px solid rgba(0,0,0,0.08); }
+  .matiere-stat { font-size: 12px; } .matiere-stat strong { display: block; font-size: 16px; font-weight: 500; }
+  .add-matiere-card { border-radius: var(--radius); border: 2px dashed var(--border); padding: 22px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; color: var(--text-muted); font-size: 14px; transition: all .18s; min-height: 160px; }
   .add-matiere-card:hover { border-color: #ccc; color: var(--text); background: var(--surface); }
-
-  /* TOUTES LES TACHES */
-  .filters {
-    display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap;
-    align-items: center;
-  }
-  .filter-btn {
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 12px;
-    cursor: pointer;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    color: var(--text-muted);
-    transition: all .15s;
-  }
+  .filters { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; align-items: center; }
+  .filter-btn { padding: 6px 14px; border-radius: 20px; font-size: 12px; cursor: pointer; border: 1px solid var(--border); background: var(--surface); color: var(--text-muted); transition: all .15s; }
   .filter-btn.active { background: var(--text); color: #fff; border-color: transparent; }
-
   .tasks-table { display: flex; flex-direction: column; gap: 6px; }
-  .task-row {
-    background: var(--surface);
-    border-radius: var(--radius-sm);
-    padding: 14px 16px;
-    display: flex; align-items: center; gap: 12px;
-    border: 1px solid var(--border);
-    transition: all .15s;
-  }
+  .task-row { background: var(--surface); border-radius: var(--radius-sm); padding: 14px 16px; display: flex; align-items: center; gap: 12px; border: 1px solid var(--border); transition: all .15s; }
   .task-row:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-  .task-row.done { opacity: .45; }
-  .task-row.done .task-name { text-decoration: line-through; }
-
-  .task-check {
-    width: 18px; height: 18px;
-    border-radius: 50%;
-    border: 1.5px solid #ccc;
-    cursor: pointer; flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center;
-    transition: all .15s;
-  }
-  .task-check.checked { background: var(--text); border-color: var(--text); }
-  .task-check.checked::after { content: '✓'; color: #fff; font-size: 10px; }
-
-  .task-matiere-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
+  .task-row.done { opacity: .45; } .task-row.done .task-name { text-decoration: line-through; }
+  .task-check { width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid #ccc; cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all .15s; }
+  .task-check.checked { background: var(--text); border-color: var(--text); } .task-check.checked::after { content: '✓'; color: #fff; font-size: 10px; }
+  .task-matiere-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
   .task-name { flex: 1; font-size: 14px; min-width: 0; }
-  .task-matiere-label {
-    font-size: 11px; font-weight: 500;
-    padding: 2px 8px; border-radius: 20px;
-    white-space: nowrap;
-  }
-  .task-type-badge {
-    font-size: 11px;
-    padding: 2px 8px; border-radius: 20px;
-    background: #F0EDE8; color: #666;
-    white-space: nowrap;
-  }
+  .task-matiere-label { font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 20px; white-space: nowrap; }
+  .task-type-badge { font-size: 11px; padding: 2px 8px; border-radius: 20px; background: #F0EDE8; color: #666; white-space: nowrap; }
   .task-type-badge.groupe { background: #D6EEE4; color: #2A6B4F; }
-  .task-deadline {
-    font-size: 12px; color: var(--text-muted);
-    white-space: nowrap; min-width: 80px; text-align: right;
-  }
-  .task-deadline.urgent { color: #C0392B; font-weight: 500; }
-  .task-deadline.soon { color: #E67E22; font-weight: 500; }
-  .task-del {
-    background: none; border: none; cursor: pointer;
-    color: #ccc; font-size: 16px; padding: 2px 4px;
-    transition: color .15s;
-  }
-  .task-del:hover { color: #999; }
-
-  /* DETAIL MATIERE */
-  .back-btn {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-size: 13px; color: var(--text-muted);
-    cursor: pointer; margin-bottom: 20px;
-    background: none; border: none; padding: 0;
-    transition: color .15s;
-  }
-  .back-btn:hover { color: var(--text); }
-
-  .detail-header {
-    border-radius: var(--radius);
-    padding: 28px 28px 22px;
-    margin-bottom: 24px;
-    display: flex; gap: 20px; align-items: flex-start;
-  }
+  .task-deadline { font-size: 12px; color: var(--text-muted); white-space: nowrap; min-width: 80px; text-align: right; }
+  .task-deadline.urgent { color: #C0392B; font-weight: 500; } .task-deadline.soon { color: #E67E22; font-weight: 500; }
+  .task-del { background: none; border: none; cursor: pointer; color: #ccc; font-size: 16px; padding: 2px 4px; transition: color .15s; } .task-del:hover { color: #999; }
+  .back-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text-muted); cursor: pointer; margin-bottom: 20px; background: none; border: none; padding: 0; transition: color .15s; } .back-btn:hover { color: var(--text); }
+  .detail-header { border-radius: var(--radius); padding: 28px 28px 22px; margin-bottom: 24px; display: flex; gap: 20px; align-items: flex-start; }
   .detail-emoji { font-size: 48px; line-height: 1; flex-shrink: 0; }
   .detail-info { flex: 1; }
-  .detail-name {
-    font-family: 'DM Serif Display', serif;
-    font-size: 28px; letter-spacing: -0.5px; margin-bottom: 4px;
-  }
+  .detail-name { font-family: 'DM Serif Display', serif; font-size: 28px; letter-spacing: -0.5px; margin-bottom: 4px; }
   .detail-meta { font-size: 13px; opacity: .65; margin-bottom: 12px; }
   .detail-actions { display: flex; gap: 8px; }
-
   .sections { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   @media (max-width: 640px) { .sections { grid-template-columns: 1fr; } }
-
-  .section-card {
-    background: var(--surface);
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
-    overflow: hidden;
-  }
-  .section-head {
-    padding: 14px 18px;
-    border-bottom: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: space-between;
-  }
+  .section-card { background: var(--surface); border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; }
+  .section-head { padding: 14px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
   .section-head h3 { font-size: 13px; font-weight: 500; }
   .section-body { padding: 12px; }
-
-  .eval-item {
-    display: flex; align-items: center; gap: 10px;
-    padding: 10px 8px;
-    border-radius: 8px;
-    transition: background .15s;
-  }
-  .eval-item:hover { background: var(--bg); }
-  .eval-pct {
-    font-size: 18px; font-weight: 500;
-    min-width: 46px; text-align: center;
-    font-family: 'DM Serif Display', serif;
-  }
-  .eval-info { flex: 1; }
-  .eval-name { font-size: 13px; font-weight: 500; }
-  .eval-date { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
-  .eval-status {
-    font-size: 10px; font-weight: 500;
-    padding: 2px 7px; border-radius: 20px;
-  }
-  .eval-status.done { background: #D6EEE4; color: #2A6B4F; }
-  .eval-status.todo { background: #FDE8D8; color: #A04A1A; }
-  .eval-del { background: none; border: none; cursor: pointer; color: #ddd; font-size: 14px; transition: color .15s; }
-  .eval-del:hover { color: #999; }
-
-  .detail-task-row {
-    display: flex; align-items: center; gap: 10px;
-    padding: 9px 8px;
-    border-radius: 8px;
-    transition: background .15s;
-  }
-  .detail-task-row:hover { background: var(--bg); }
-  .detail-task-row.done { opacity: .4; }
-  .detail-task-row.done .dt-name { text-decoration: line-through; }
-  .dt-name { flex: 1; font-size: 13px; }
-  .dt-date { font-size: 11px; color: var(--text-muted); white-space: nowrap; }
-  .dt-del { background: none; border: none; cursor: pointer; color: #ddd; font-size: 14px; transition: color .15s; }
-  .dt-del:hover { color: #999; }
-
-  .empty-state {
-    text-align: center; padding: 24px 16px;
-    color: var(--text-muted); font-size: 13px;
-  }
-
-  /* MODAL */
-  .modal-overlay {
-    position: fixed; inset: 0; z-index: 200;
-    background: rgba(0,0,0,0.3);
-    backdrop-filter: blur(4px);
-    display: flex; align-items: center; justify-content: center;
-    padding: 20px;
-    opacity: 0; pointer-events: none;
-    transition: opacity .2s;
-  }
+  .eval-item { display: flex; align-items: center; gap: 10px; padding: 10px 8px; border-radius: 8px; transition: background .15s; } .eval-item:hover { background: var(--bg); }
+  .eval-pct { font-size: 18px; font-weight: 500; min-width: 46px; text-align: center; font-family: 'DM Serif Display', serif; }
+  .eval-info { flex: 1; } .eval-name { font-size: 13px; font-weight: 500; } .eval-date { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+  .eval-status { font-size: 10px; font-weight: 500; padding: 2px 7px; border-radius: 20px; }
+  .eval-status.done { background: #D6EEE4; color: #2A6B4F; } .eval-status.todo { background: #FDE8D8; color: #A04A1A; }
+  .eval-del { background: none; border: none; cursor: pointer; color: #ddd; font-size: 14px; transition: color .15s; } .eval-del:hover { color: #999; }
+  .detail-task-row { display: flex; align-items: center; gap: 10px; padding: 9px 8px; border-radius: 8px; transition: background .15s; } .detail-task-row:hover { background: var(--bg); }
+  .detail-task-row.done { opacity: .4; } .detail-task-row.done .dt-name { text-decoration: line-through; }
+  .dt-name { flex: 1; font-size: 13px; } .dt-date { font-size: 11px; color: var(--text-muted); white-space: nowrap; }
+  .dt-del { background: none; border: none; cursor: pointer; color: #ddd; font-size: 14px; transition: color .15s; } .dt-del:hover { color: #999; }
+  .empty-state { text-align: center; padding: 24px 16px; color: var(--text-muted); font-size: 13px; }
+  .modal-overlay { position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.3); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity .2s; }
   .modal-overlay.open { opacity: 1; pointer-events: all; }
-  .modal {
-    background: var(--surface);
-    border-radius: var(--radius);
-    padding: 28px;
-    width: 100%; max-width: 460px;
-    transform: translateY(8px);
-    transition: transform .2s;
-    max-height: 90vh;
-    overflow-y: auto;
-  }
+  .modal { background: var(--surface); border-radius: var(--radius); padding: 28px; width: 100%; max-width: 460px; transform: translateY(8px); transition: transform .2s; max-height: 90vh; overflow-y: auto; }
   .modal-overlay.open .modal { transform: translateY(0); }
-  .modal-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: 22px; margin-bottom: 20px;
-  }
+  .modal-title { font-family: 'DM Serif Display', serif; font-size: 22px; margin-bottom: 20px; }
   .form-group { margin-bottom: 14px; }
   .form-label { font-size: 12px; color: var(--text-muted); margin-bottom: 5px; display: block; }
-  .form-input {
-    width: 100%;
-    padding: 9px 12px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    background: var(--bg);
-    color: var(--text);
-    transition: border-color .15s;
-  }
+  .form-input { width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif; font-size: 14px; background: var(--bg); color: var(--text); transition: border-color .15s; }
   .form-input:focus { outline: none; border-color: #aaa; }
+  .form-textarea { width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif; font-size: 14px; background: var(--bg); color: var(--text); resize: vertical; min-height: 80px; transition: border-color .15s; }
+  .form-textarea:focus { outline: none; border-color: #aaa; }
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 20px; }
-
   .color-picker { display: flex; gap: 8px; flex-wrap: wrap; }
-  .color-opt {
-    width: 28px; height: 28px; border-radius: 50%;
-    cursor: pointer; border: 2px solid transparent;
-    transition: transform .15s;
-  }
+  .color-opt { width: 28px; height: 28px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; transition: transform .15s; }
   .color-opt.selected { border-color: var(--text); transform: scale(1.1); }
-
-  /* TOAST */
-  .toast {
-    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(8px);
-    background: var(--text); color: #fff;
-    padding: 10px 20px; border-radius: 20px;
-    font-size: 13px; z-index: 300;
-    opacity: 0; transition: all .2s;
-    pointer-events: none;
-  }
+  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(8px); background: var(--text); color: #fff; padding: 10px 20px; border-radius: 20px; font-size: 13px; z-index: 300; opacity: 0; transition: all .2s; pointer-events: none; }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-  /* RESPONSIVE */
-  @media (max-width: 600px) {
-    main { padding: 20px 16px 80px; }
-    .page-title { font-size: 26px; }
-    .matieres-grid { grid-template-columns: 1fr 1fr; }
-    .task-matiere-label { display: none; }
-    nav { padding: 0 16px; }
-  }
+  /* MEMOIRE */
+  .mem-tabs { display:flex; gap:6px; margin-bottom:24px; border-bottom:1px solid var(--border); }
+  .mem-tab { padding:8px 16px; font-size:13px; cursor:pointer; border:none; background:transparent; color:var(--text-muted); font-family:'DM Sans',sans-serif; border-bottom:2px solid transparent; margin-bottom:-1px; transition:all .15s; }
+  .mem-tab.active { color:var(--text); border-bottom-color:var(--text); font-weight:500; }
+  .mem-section { display:none; } .mem-section.active { display:block; }
+  .mem-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:28px; }
+  @media(max-width:600px){ .mem-stats{grid-template-columns:1fr 1fr;} }
+  .mem-stat { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px; text-align:center; }
+  .mem-stat-n { font-family:'DM Serif Display',serif; font-size:26px; color:var(--text); }
+  .mem-stat-l { font-size:11px; color:var(--text-muted); margin-top:3px; }
+  .mem-info-card { background:var(--surface); border-radius:var(--radius); border:1px solid var(--border); padding:22px; margin-bottom:16px; }
+  .mem-info-label { font-size:11px; font-weight:500; color:var(--text-muted); text-transform:uppercase; letter-spacing:.06em; margin-bottom:5px; }
+  .mem-info-value { font-size:14px; color:var(--text); line-height:1.6; }
+  .mem-info-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px; }
+  @media(max-width:600px){ .mem-info-grid{grid-template-columns:1fr;} }
+  .partie-card { background:var(--surface); border-radius:var(--radius); border:1px solid var(--border); padding:20px; margin-bottom:12px; }
+  .partie-header { display:flex; align-items:center; gap:12px; margin-bottom:10px; }
+  .partie-num { font-family:'DM Serif Display',serif; font-size:22px; color:var(--text-muted); min-width:28px; }
+  .partie-name { font-size:15px; font-weight:500; flex:1; }
+  .partie-status { font-size:11px; padding:3px 10px; border-radius:20px; font-weight:500; white-space:nowrap; }
+  .partie-status.todo { background:#F1EFE8; color:#666; } .partie-status.wip { background:#FFF0D6; color:#8A5A00; } .partie-status.done { background:#D6EEE4; color:#2A6B4F; }
+  .partie-progress { height:4px; background:var(--bg); border-radius:2px; overflow:hidden; margin-bottom:10px; }
+  .partie-progress-fill { height:100%; border-radius:2px; transition:width .3s; }
+  .partie-desc { font-size:12px; color:var(--text-muted); line-height:1.6; margin-bottom:10px; }
+  .partie-tasks-mini { display:flex; flex-direction:column; gap:5px; }
+  .mini-task { display:flex; align-items:center; gap:8px; font-size:12px; color:var(--text-muted); }
+  .mini-check { width:14px; height:14px; border-radius:50%; border:1.5px solid #ccc; flex-shrink:0; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all .15s; }
+  .mini-check.done { background:var(--text); border-color:var(--text); } .mini-check.done::after { content:'✓'; color:#fff; font-size:8px; }
+  .mini-task-name { flex:1; } .mini-task-name.done { text-decoration:line-through; opacity:.5; }
+  .lecture-filters { display:flex; gap:6px; flex-wrap:wrap; }
+  .lec-card { background:var(--surface); border-radius:var(--radius-sm); border:1px solid var(--border); padding:16px; margin-bottom:8px; display:flex; gap:14px; align-items:flex-start; }
+  .lec-status-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; margin-top:4px; }
+  .lec-body { flex:1; min-width:0; }
+  .lec-title { font-size:14px; font-weight:500; color:var(--text); margin-bottom:2px; }
+  .lec-authors { font-size:12px; color:var(--text-muted); margin-bottom:6px; }
+  .lec-note { font-size:12px; color:var(--text-muted); font-style:italic; line-height:1.5; }
+  .lec-tags { display:flex; gap:5px; flex-wrap:wrap; margin-top:8px; }
+  .lec-tag { font-size:11px; padding:2px 8px; border-radius:20px; }
+  .lec-actions { display:flex; gap:6px; align-items:center; }
+  .terrain-entry { background:var(--surface); border:1px solid var(--border); border-left:3px solid #9B72D4; border-radius:var(--radius-sm); padding:18px; margin-bottom:10px; }
+  .terrain-entry-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px; }
+  .terrain-date { font-size:14px; font-weight:500; color:var(--text); }
+  .terrain-ctx { font-size:12px; color:var(--text-muted); margin-top:2px; }
+  .terrain-section-label { font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:.06em; color:var(--text-muted); margin:10px 0 3px; }
+  .terrain-text { font-size:13px; color:var(--text); line-height:1.65; }
+  .terrain-verbatim { background:var(--bg); border-left:2px solid #9B72D4; padding:10px 14px; font-style:italic; font-size:12px; color:var(--text-muted); line-height:1.55; margin:8px 0; border-radius:0 6px 6px 0; }
+  .terrain-tags { display:flex; gap:5px; flex-wrap:wrap; margin-top:10px; }
+  .terrain-tag { font-size:11px; padding:2px 8px; border-radius:20px; }
+  .mem-task-row { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px 16px; display:flex; align-items:center; gap:12px; margin-bottom:6px; }
+  .mem-task-row.done { opacity:.4; } .mem-task-row.done .mem-task-name { text-decoration:line-through; }
+  .mem-task-name { flex:1; font-size:14px; }
+  .mem-task-partie { font-size:11px; padding:2px 8px; border-radius:20px; background:var(--bg); color:var(--text-muted); white-space:nowrap; }
+  .mem-task-date { font-size:12px; color:var(--text-muted); white-space:nowrap; min-width:80px; text-align:right; }
+  .mem-task-date.urgent { color:#C0392B; font-weight:500; } .mem-task-date.soon { color:#E67E22; font-weight:500; }
+  @media (max-width: 600px) { main { padding: 20px 16px 80px; } .page-title { font-size: 26px; } .matieres-grid { grid-template-columns: 1fr 1fr; } .task-matiere-label { display: none; } nav { padding: 0 16px; } }
 </style>
 </head>
 <body>
-
 <nav>
   <div class="nav-logo">studyspace</div>
   <div class="nav-tabs">
@@ -416,222 +165,101 @@
     <button class="nav-tab" onclick="showView('memoire')">Mémoire</button>
   </div>
 </nav>
-
 <main>
-  <!-- VUE MATIERES -->
   <div class="view active" id="view-matieres">
     <div class="page-header">
-      <div>
-        <div class="page-title">Mes matières</div>
-        <div class="page-sub" id="sub-matieres">Chargement...</div>
-      </div>
+      <div><div class="page-title">Mes matières</div><div class="page-sub" id="sub-matieres">Chargement...</div></div>
       <button class="btn btn-primary" onclick="openModal('matiere')">+ Matière</button>
     </div>
     <div class="matieres-grid" id="matieres-grid"></div>
   </div>
 
-  <!-- VUE DETAIL MATIERE -->
   <div class="view" id="view-detail">
     <button class="back-btn" onclick="showView('matieres')">← Retour</button>
     <div class="detail-header" id="detail-header"></div>
     <div class="sections">
       <div class="section-card">
-        <div class="section-head">
-          <h3>Évaluations</h3>
-          <button class="btn btn-ghost btn-sm" onclick="openModal('eval')">+ Ajouter</button>
-        </div>
+        <div class="section-head"><h3>Évaluations</h3><button class="btn btn-ghost btn-sm" onclick="openModal('eval')">+ Ajouter</button></div>
         <div class="section-body" id="detail-evals"></div>
       </div>
       <div class="section-card">
-        <div class="section-head">
-          <h3>Tâches</h3>
-          <button class="btn btn-ghost btn-sm" onclick="openModal('task-detail')">+ Ajouter</button>
-        </div>
+        <div class="section-head"><h3>Tâches</h3><button class="btn btn-ghost btn-sm" onclick="openModal('task-detail')">+ Ajouter</button></div>
         <div class="section-body" id="detail-tasks"></div>
       </div>
     </div>
   </div>
 
-  <!-- VUE TOUTES LES TACHES -->
   <div class="view" id="view-toutes">
     <div class="page-header">
-      <div>
-        <div class="page-title">Toutes les tâches</div>
-        <div class="page-sub" id="sub-toutes"></div>
-      </div>
+      <div><div class="page-title">Toutes les tâches</div><div class="page-sub" id="sub-toutes"></div></div>
       <button class="btn btn-primary" onclick="openModal('task-global')">+ Tâche</button>
     </div>
     <div class="filters" id="filters"></div>
     <div class="tasks-table" id="tasks-table"></div>
   </div>
 
-<!-- VUE MEMOIRE -->
-<div class="view" id="view-memoire">
-  <div class="page-header">
-    <div>
-      <div class="page-title">Mémoire</div>
-      <div class="page-sub">Master 128 · MBC · Dauphine — dir. F.-X. de Vaujany</div>
+  <div class="view" id="view-memoire">
+    <div class="page-header">
+      <div><div class="page-title">Mémoire</div><div class="page-sub">Master 128 · MBC · Dauphine</div></div>
+    </div>
+    <div class="mem-tabs">
+      <button class="mem-tab active" onclick="showMemTab('overview',this)">Vue d'ensemble</button>
+      <button class="mem-tab" onclick="showMemTab('parties',this)">Les 3 parties</button>
+      <button class="mem-tab" onclick="showMemTab('lectures',this)">Lectures</button>
+      <button class="mem-tab" onclick="showMemTab('terrain',this)">Terrain</button>
+      <button class="mem-tab" onclick="showMemTab('taches',this)">Tâches</button>
+    </div>
+    <div class="mem-section active" id="mem-overview">
+      <div class="mem-stats" id="mem-stats-el"></div>
+      <div id="mem-overview-cards"></div>
+      <div class="mem-info-card">
+        <div class="mem-info-label" style="margin-bottom:12px">Avancement des 3 parties</div>
+        <div id="overview-parties"></div>
+      </div>
+    </div>
+    <div class="mem-section" id="mem-parties">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+        <div style="font-size:13px;color:var(--text-muted)">Clique sur une tâche pour la cocher</div>
+        <button class="btn btn-primary" onclick="openMemModal('partie-task')">+ Tâche</button>
+      </div>
+      <div id="parties-list"></div>
+    </div>
+    <div class="mem-section" id="mem-lectures">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+        <div class="lecture-filters" id="lec-filters"></div>
+        <button class="btn btn-primary" onclick="openMemModal('lecture')">+ Référence</button>
+      </div>
+      <div id="lectures-list"></div>
+    </div>
+    <div class="mem-section" id="mem-terrain">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+        <div style="font-size:13px;color:var(--text-muted)" id="terrain-count"></div>
+        <button class="btn btn-primary" onclick="openMemModal('terrain')">+ Observation</button>
+      </div>
+      <div id="terrain-list"></div>
+    </div>
+    <div class="mem-section" id="mem-taches">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+        <div style="font-size:13px;color:var(--text-muted)" id="mem-tasks-count"></div>
+        <button class="btn btn-primary" onclick="openMemModal('mem-task')">+ Tâche</button>
+      </div>
+      <div id="mem-tasks-list"></div>
     </div>
   </div>
-
-  <div class="mem-tabs">
-    <button class="mem-tab active" onclick="showMemTab('overview',this)">Vue d'ensemble</button>
-    <button class="mem-tab" onclick="showMemTab('parties',this)">Les 3 parties</button>
-    <button class="mem-tab" onclick="showMemTab('lectures',this)">Lectures</button>
-    <button class="mem-tab" onclick="showMemTab('terrain',this)">Terrain</button>
-    <button class="mem-tab" onclick="showMemTab('taches',this)">Tâches</button>
-  </div>
-
-  <!-- OVERVIEW -->
-  <div class="mem-section active" id="mem-overview">
-    <div class="mem-stats" id="mem-stats-el"></div>
-    <div id="mem-overview-cards"></div>
-    <div class="mem-info-card">
-      <div class="mem-info-label" style="margin-bottom:12px">Avancement des 3 parties</div>
-      <div id="overview-parties"></div>
-    </div>
-  </div>
-
-  <!-- PARTIES -->
-  <div class="mem-section" id="mem-parties">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
-      <div style="font-size:13px;color:var(--text-muted)">Clique sur une tâche pour la cocher</div>
-      <button class="btn btn-primary" onclick="openMemModal('partie-task')">+ Tâche</button>
-    </div>
-    <div id="parties-list"></div>
-  </div>
-
-  <!-- LECTURES -->
-  <div class="mem-section" id="mem-lectures">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-      <div class="lecture-filters" id="lec-filters"></div>
-      <button class="btn btn-primary" onclick="openMemModal('lecture')">+ Référence</button>
-    </div>
-    <div id="lectures-list"></div>
-  </div>
-
-  <!-- TERRAIN -->
-  <div class="mem-section" id="mem-terrain">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
-      <div style="font-size:13px;color:var(--text-muted)" id="terrain-count"></div>
-      <button class="btn btn-primary" onclick="openMemModal('terrain')">+ Observation</button>
-    </div>
-    <div id="terrain-list"></div>
-  </div>
-
-  <!-- TACHES -->
-  <div class="mem-section" id="mem-taches">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
-      <div style="font-size:13px;color:var(--text-muted)" id="mem-tasks-count"></div>
-      <button class="btn btn-primary" onclick="openMemModal('mem-task')">+ Tâche</button>
-    </div>
-    <div id="mem-tasks-list"></div>
-  </div>
-</div>
 </main>
 
-
-<!-- STYLES MEMOIRE -->
-<style>
-.mem-tabs { display:flex; gap:6px; margin-bottom:24px; border-bottom:1px solid var(--border); padding-bottom:0; }
-.mem-tab { padding:8px 16px; font-size:13px; cursor:pointer; border:none; background:transparent; color:var(--text-muted); font-family:'DM Sans',sans-serif; border-bottom:2px solid transparent; margin-bottom:-1px; transition:all .15s; }
-.mem-tab.active { color:var(--text); border-bottom-color:var(--text); font-weight:500; }
-.mem-section { display:none; }
-.mem-section.active { display:block; }
-
-/* VUE D'ENSEMBLE */
-.mem-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:28px; }
-@media(max-width:600px){ .mem-stats{grid-template-columns:1fr 1fr;} }
-.mem-stat { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px; text-align:center; }
-.mem-stat-n { font-family:'DM Serif Display',serif; font-size:26px; color:var(--text); }
-.mem-stat-l { font-size:11px; color:var(--text-muted); margin-top:3px; }
-
-.mem-info-card { background:var(--surface); border-radius:var(--radius); border:1px solid var(--border); padding:22px; margin-bottom:16px; }
-.mem-info-label { font-size:11px; font-weight:500; color:var(--text-muted); text-transform:uppercase; letter-spacing:.06em; margin-bottom:5px; }
-.mem-info-value { font-size:14px; color:var(--text); line-height:1.6; }
-.mem-info-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px; }
-@media(max-width:600px){ .mem-info-grid{grid-template-columns:1fr;} }
-
-/* PARTIES */
-.partie-card { background:var(--surface); border-radius:var(--radius); border:1px solid var(--border); padding:20px; margin-bottom:12px; }
-.partie-header { display:flex; align-items:center; gap:12px; margin-bottom:10px; }
-.partie-num { font-family:'DM Serif Display',serif; font-size:22px; color:var(--text-muted); min-width:28px; }
-.partie-name { font-size:15px; font-weight:500; flex:1; }
-.partie-status { font-size:11px; padding:3px 10px; border-radius:20px; font-weight:500; white-space:nowrap; }
-.partie-status.todo { background:#F1EFE8; color:#666; }
-.partie-status.wip { background:#FFF0D6; color:#8A5A00; }
-.partie-status.done { background:#D6EEE4; color:#2A6B4F; }
-.partie-progress { height:4px; background:var(--bg); border-radius:2px; overflow:hidden; margin-bottom:10px; }
-.partie-progress-fill { height:100%; border-radius:2px; transition:width .3s; }
-.partie-desc { font-size:12px; color:var(--text-muted); line-height:1.6; margin-bottom:10px; }
-.partie-tasks-mini { display:flex; flex-direction:column; gap:5px; }
-.mini-task { display:flex; align-items:center; gap:8px; font-size:12px; color:var(--text-muted); }
-.mini-check { width:14px; height:14px; border-radius:50%; border:1.5px solid #ccc; flex-shrink:0; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all .15s; }
-.mini-check.done { background:var(--text); border-color:var(--text); }
-.mini-check.done::after { content:'✓'; color:#fff; font-size:8px; }
-.mini-task-name { flex:1; }
-.mini-task-name.done { text-decoration:line-through; opacity:.5; }
-
-/* LECTURES */
-.lecture-filters { display:flex; gap:6px; margin-bottom:16px; flex-wrap:wrap; }
-.lec-card { background:var(--surface); border-radius:var(--radius-sm); border:1px solid var(--border); padding:16px; margin-bottom:8px; display:flex; gap:14px; align-items:flex-start; }
-.lec-status-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; margin-top:4px; }
-.lec-body { flex:1; min-width:0; }
-.lec-title { font-size:14px; font-weight:500; color:var(--text); margin-bottom:2px; }
-.lec-authors { font-size:12px; color:var(--text-muted); margin-bottom:6px; }
-.lec-note { font-size:12px; color:var(--text-muted); font-style:italic; line-height:1.5; }
-.lec-tags { display:flex; gap:5px; flex-wrap:wrap; margin-top:8px; }
-.lec-tag { font-size:11px; padding:2px 8px; border-radius:20px; }
-.lec-actions { display:flex; gap:6px; align-items:center; }
-.lec-status-btn { font-size:11px; padding:4px 10px; border-radius:20px; border:1px solid var(--border); background:transparent; cursor:pointer; color:var(--text-muted); font-family:'DM Sans',sans-serif; transition:all .15s; }
-.lec-status-btn:hover { background:var(--bg); }
-
-/* TERRAIN */
-.terrain-entry { background:var(--surface); border:1px solid var(--border); border-left:3px solid #9B72D4; border-radius:var(--radius-sm); padding:18px; margin-bottom:10px; }
-.terrain-entry-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px; }
-.terrain-date { font-size:14px; font-weight:500; color:var(--text); }
-.terrain-ctx { font-size:12px; color:var(--text-muted); margin-top:2px; }
-.terrain-section-label { font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:.06em; color:var(--text-muted); margin:10px 0 3px; }
-.terrain-text { font-size:13px; color:var(--text); line-height:1.65; }
-.terrain-verbatim { background:var(--bg); border-left:2px solid #9B72D4; padding:10px 14px; font-style:italic; font-size:12px; color:var(--text-muted); line-height:1.55; margin:8px 0; border-radius:0 6px 6px 0; }
-.terrain-tags { display:flex; gap:5px; flex-wrap:wrap; margin-top:10px; }
-.terrain-tag { font-size:11px; padding:2px 8px; border-radius:20px; }
-
-/* TACHES MEMOIRE */
-.mem-task-row { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px 16px; display:flex; align-items:center; gap:12px; margin-bottom:6px; }
-.mem-task-row.done { opacity:.4; }
-.mem-task-row.done .mem-task-name { text-decoration:line-through; }
-.mem-task-name { flex:1; font-size:14px; }
-.mem-task-partie { font-size:11px; padding:2px 8px; border-radius:20px; background:var(--bg); color:var(--text-muted); white-space:nowrap; }
-.mem-task-date { font-size:12px; color:var(--text-muted); white-space:nowrap; min-width:80px; text-align:right; }
-.mem-task-date.urgent { color:#C0392B; font-weight:500; }
-.mem-task-date.soon { color:#E67E22; font-weight:500; }
-
-.form-textarea { width:100%; padding:9px 12px; border:1px solid var(--border); border-radius:var(--radius-sm); font-family:'DM Sans',sans-serif; font-size:14px; background:var(--bg); color:var(--text); resize:vertical; min-height:80px; transition:border-color .15s; }
-.form-textarea:focus { outline:none; border-color:#aaa; }
-</style>
-
-
-<!-- MODAL MEMOIRE -->
 <div class="modal-overlay" id="mem-modal-overlay" onclick="if(event.target===this)closeMemModal()">
   <div class="modal" id="mem-modal-content"></div>
 </div>
-
-<!-- MODALS -->
 <div class="modal-overlay" id="modal-overlay" onclick="closeModalOutside(event)">
   <div class="modal" id="modal-content"></div>
 </div>
-
 <div class="toast" id="toast"></div>
 
-<!-- FIREBASE SDK -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, set, get, onValue, remove, push } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-// ══════════════════════════════════════════════
-//  🔧 COLLE ICI TA CONFIG FIREBASE
-// ══════════════════════════════════════════════
 const firebaseConfig = {
   apiKey: "AIzaSyCd19YcuAiC4GfUKoXCxA17LRvbXGd34o8",
   authDomain: "work-tracker-f8c4a.firebaseapp.com",
@@ -641,17 +269,12 @@ const firebaseConfig = {
   messagingSenderId: "378363241769",
   appId: "1:378363241769:web:02f710dc3c9c15e8714338"
 };
-// ══════════════════════════════════════════════
 
 const COLORS = [
-  {bg:'#E8DFF5',text:'#5B3F8A',dot:'#9B72D4'},
-  {bg:'#D6EEE4',text:'#2A6B4F',dot:'#4CAF82'},
-  {bg:'#FDE8D8',text:'#A04A1A',dot:'#F08050'},
-  {bg:'#DAEAF8',text:'#1F5480',dot:'#5B9BD5'},
-  {bg:'#F5E6E8',text:'#8A2C3A',dot:'#D4727E'},
-  {bg:'#E2EDD6',text:'#3A5E1F',dot:'#7AAD4A'},
-  {bg:'#FFF0D6',text:'#8A5A00',dot:'#E0A030'},
-  {bg:'#E0EAF0',text:'#2A4A60',dot:'#5890B0'},
+  {bg:'#E8DFF5',text:'#5B3F8A',dot:'#9B72D4'},{bg:'#D6EEE4',text:'#2A6B4F',dot:'#4CAF82'},
+  {bg:'#FDE8D8',text:'#A04A1A',dot:'#F08050'},{bg:'#DAEAF8',text:'#1F5480',dot:'#5B9BD5'},
+  {bg:'#F5E6E8',text:'#8A2C3A',dot:'#D4727E'},{bg:'#E2EDD6',text:'#3A5E1F',dot:'#7AAD4A'},
+  {bg:'#FFF0D6',text:'#8A5A00',dot:'#E0A030'},{bg:'#E0EAF0',text:'#2A4A60',dot:'#5890B0'},
 ];
 const EMOJIS = ['📚','🧮','🔬','🌍','💻','⚗️','📝','🎨','🏛️','🧠','📊','🔭'];
 
@@ -662,7 +285,6 @@ let filterMatiere = 'all';
 let filterStatus = 'todo';
 let useFirebase = false;
 
-// Try Firebase
 try {
   app = initializeApp(firebaseConfig);
   db = getDatabase(app);
@@ -670,57 +292,30 @@ try {
   useFirebase = true;
   onValue(dbRef, (snapshot) => {
     const data = snapshot.val();
-    if (data) {
-      state.matieres = data.matieres || {};
-      state.tasks = data.tasks || {};
-      state.evals = data.evals || {};
-    } else {
-      state = { matieres: {}, tasks: {}, evals: {} };
-    }
+    if (data) { state.matieres = data.matieres || {}; state.tasks = data.tasks || {}; state.evals = data.evals || {}; }
+    else { state = { matieres: {}, tasks: {}, evals: {} }; }
     renderAll();
   });
 } catch(e) {
-  // Fallback localStorage
-  try {
-    const saved = localStorage.getItem('studyspace');
-    if (saved) state = JSON.parse(saved);
-  } catch(e2) {}
+  try { const saved = localStorage.getItem('studyspace'); if (saved) state = JSON.parse(saved); } catch(e2) {}
   renderAll();
 }
 
-function saveLocal() {
-  try { localStorage.setItem('studyspace', JSON.stringify(state)); } catch(e) {}
-}
-
+function saveLocal() { try { localStorage.setItem('studyspace', JSON.stringify(state)); } catch(e) {} }
 async function saveDB() {
-  if (useFirebase) {
-    try { await set(dbRef, state); } catch(e) { saveLocal(); }
-  } else {
-    saveLocal();
-  }
+  if (useFirebase) { try { await set(dbRef, state); } catch(e) { saveLocal(); } } else { saveLocal(); }
 }
-
 function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
-
-function renderAll() {
-  renderMatieres();
-  renderToutes();
-  if (currentMatiereId) renderDetail(currentMatiereId);
-  updateSubs();
-}
-
+function renderAll() { renderMatieres(); renderToutes(); if (currentMatiereId) renderDetail(currentMatiereId); updateSubs(); }
 function updateSubs() {
   const matieres = Object.values(state.matieres);
   const tasks = Object.values(state.tasks);
   const todo = tasks.filter(t => !t.done).length;
-  document.getElementById('sub-matieres').textContent =
-    `${matieres.length} matière${matieres.length!==1?'s':''} · ${todo} tâche${todo!==1?'s':''} en cours`;
+  document.getElementById('sub-matieres').textContent = `${matieres.length} matière${matieres.length!==1?'s':''} · ${todo} tâche${todo!==1?'s':''} en cours`;
   const shown = getFilteredTasks();
-  document.getElementById('sub-toutes').textContent =
-    `${shown.length} tâche${shown.length!==1?'s':''}`;
+  document.getElementById('sub-toutes').textContent = `${shown.length} tâche${shown.length!==1?'s':''}`;
 }
 
-// ── MATIERES ─────────────────────────────────
 function renderMatieres() {
   const grid = document.getElementById('matieres-grid');
   const matieres = Object.entries(state.matieres);
@@ -729,35 +324,18 @@ function renderMatieres() {
     const mTasks = Object.values(state.tasks).filter(t => t.matiereId === id && !t.done).length;
     const mEvals = Object.values(state.evals).filter(e => e.matiereId === id && e.status !== 'done').length;
     return `<div class="matiere-card" style="background:${c.bg};color:${c.text}" onclick="goDetail('${id}')">
-      <div class="matiere-card-top">
-        <span class="matiere-emoji">${m.emoji||'📚'}</span>
-        ${m.coeff?`<span class="matiere-coeff">coeff. ${m.coeff}</span>`:''}
-      </div>
-      <div class="matiere-name">${m.name}</div>
-      <div class="matiere-prof">${m.prof||'—'}</div>
-      <div class="matiere-stats">
-        <div class="matiere-stat"><strong>${mTasks}</strong>tâches</div>
-        <div class="matiere-stat"><strong>${mEvals}</strong>évals à venir</div>
-      </div>
+      <div class="matiere-card-top"><span class="matiere-emoji">${m.emoji||'📚'}</span>${m.coeff?`<span class="matiere-coeff">coeff. ${m.coeff}</span>`:''}</div>
+      <div class="matiere-name">${m.name}</div><div class="matiere-prof">${m.prof||'—'}</div>
+      <div class="matiere-stats"><div class="matiere-stat"><strong>${mTasks}</strong>tâches</div><div class="matiere-stat"><strong>${mEvals}</strong>évals à venir</div></div>
     </div>`;
-  }).join('') +
-  `<div class="add-matiere-card" onclick="openModal('matiere')">
-    <span style="font-size:20px">+</span> Ajouter une matière
-  </div>`;
+  }).join('') + `<div class="add-matiere-card" onclick="openModal('matiere')"><span style="font-size:20px">+</span> Ajouter une matière</div>`;
 }
 
-// ── DETAIL ────────────────────────────────────
-window.goDetail = function(id) {
-  currentMatiereId = id;
-  renderDetail(id);
-  showView('detail');
-}
+window.goDetail = function(id) { currentMatiereId = id; renderDetail(id); showView('detail'); }
 
 function renderDetail(id) {
-  const m = state.matieres[id];
-  if (!m) return;
+  const m = state.matieres[id]; if (!m) return;
   const c = COLORS[m.colorIdx || 0];
-
   document.getElementById('detail-header').style.background = c.bg;
   document.getElementById('detail-header').style.color = c.text;
   document.getElementById('detail-header').innerHTML = `
@@ -770,86 +348,55 @@ function renderDetail(id) {
         <button class="btn btn-ghost btn-sm" style="color:#C0392B" onclick="deleteMatiere('${id}')">Supprimer</button>
       </div>
     </div>`;
-
-  // Evals
   const evals = Object.entries(state.evals).filter(([,e]) => e.matiereId === id);
   const evalsEl = document.getElementById('detail-evals');
-  if (evals.length === 0) {
-    evalsEl.innerHTML = '<div class="empty-state">Aucune évaluation</div>';
-  } else {
-    evalsEl.innerHTML = evals.sort((a,b) => (a[1].date||'')>(b[1].date||'') ? 1 : -1).map(([eid, e]) => `
+  evalsEl.innerHTML = evals.length === 0 ? '<div class="empty-state">Aucune évaluation</div>'
+    : evals.sort((a,b) => (a[1].date||'')>(b[1].date||'') ? 1 : -1).map(([eid, e]) => `
       <div class="eval-item">
         <div class="eval-pct" style="color:${c.text}">${e.pct||'?'}%</div>
-        <div class="eval-info">
-          <div class="eval-name">${e.name}</div>
-          <div class="eval-date">${e.date ? formatDate(e.date) : 'Date non définie'}</div>
-        </div>
+        <div class="eval-info"><div class="eval-name">${e.name}</div><div class="eval-date">${e.date ? formatDate(e.date) : 'Date non définie'}</div></div>
         <span class="eval-status ${e.status==='done'?'done':'todo'}">${e.status==='done'?'Passé':'À venir'}</span>
         <button class="eval-del" onclick="deleteEval('${eid}')">×</button>
       </div>`).join('');
-  }
-
-  // Tasks
   const tasks = Object.entries(state.tasks).filter(([,t]) => t.matiereId === id);
   const tasksEl = document.getElementById('detail-tasks');
-  if (tasks.length === 0) {
-    tasksEl.innerHTML = '<div class="empty-state">Aucune tâche</div>';
-  } else {
-    tasksEl.innerHTML = tasks.sort((a,b) => (a[1].date||'zzz')>(b[1].date||'zzz')?1:-1).map(([tid, t]) => `
+  tasksEl.innerHTML = tasks.length === 0 ? '<div class="empty-state">Aucune tâche</div>'
+    : tasks.sort((a,b) => (a[1].date||'zzz')>(b[1].date||'zzz')?1:-1).map(([tid, t]) => `
       <div class="detail-task-row ${t.done?'done':''}">
         <div class="task-check ${t.done?'checked':''}" onclick="toggleTask('${tid}')"></div>
         <div class="dt-name">${t.name}${t.type==='groupe'?' 👥':''}</div>
         <div class="dt-date">${t.date?formatDate(t.date):''}</div>
-        <button class="dt-del" onclick="editTask('${tid}')" style="margin-right:2px">✎</button><button class="dt-del" onclick="deleteTask('${tid}')">×</button>
+        <button class="dt-del" onclick="editTask('${tid}')" style="margin-right:2px">✎</button>
+        <button class="dt-del" onclick="deleteTask('${tid}')">×</button>
       </div>`).join('');
-  }
 }
 
-// ── TOUTES LES TACHES ────────────────────────
 function getFilteredTasks() {
   let tasks = Object.entries(state.tasks);
   if (filterMatiere !== 'all') tasks = tasks.filter(([,t]) => t.matiereId === filterMatiere);
   if (filterStatus === 'todo') tasks = tasks.filter(([,t]) => !t.done);
   else if (filterStatus === 'done') tasks = tasks.filter(([,t]) => t.done);
-  tasks.sort((a,b) => {
-    const da = a[1].date || '9999';
-    const db2 = b[1].date || '9999';
-    return da > db2 ? 1 : -1;
-  });
+  tasks.sort((a,b) => (a[1].date||'9999') > (b[1].date||'9999') ? 1 : -1);
   return tasks;
 }
 
 function renderToutes() {
   const matieres = Object.entries(state.matieres);
-
-  // Filters
-  const filtersEl = document.getElementById('filters');
-  filtersEl.innerHTML =
+  document.getElementById('filters').innerHTML =
     `<button class="filter-btn ${filterStatus==='todo'?'active':''}" onclick="setFilterStatus('todo')">À faire</button>
      <button class="filter-btn ${filterStatus==='done'?'active':''}" onclick="setFilterStatus('done')">Terminées</button>
      <button class="filter-btn ${filterStatus==='all'?'active':''}" onclick="setFilterStatus('all')">Toutes</button>
      <div style="width:1px;background:var(--border);height:20px;margin:0 4px"></div>
      <button class="filter-btn ${filterMatiere==='all'?'active':''}" onclick="setFilterMatiere('all')">Toutes les matières</button>` +
-    matieres.map(([id, m]) => {
-      const c = COLORS[m.colorIdx||0];
-      return `<button class="filter-btn ${filterMatiere===id?'active':''}" onclick="setFilterMatiere('${id}')" style="${filterMatiere===id?'':'border-left:3px solid '+c.dot}">${m.name}</button>`;
-    }).join('');
-
+    matieres.map(([id, m]) => { const c = COLORS[m.colorIdx||0]; return `<button class="filter-btn ${filterMatiere===id?'active':''}" onclick="setFilterMatiere('${id}')" style="${filterMatiere===id?'':'border-left:3px solid '+c.dot}">${m.name}</button>`; }).join('');
   const tasks = getFilteredTasks();
   const tableEl = document.getElementById('tasks-table');
-  if (tasks.length === 0) {
-    tableEl.innerHTML = '<div class="empty-state" style="padding:40px;text-align:center;color:var(--text-muted)">Aucune tâche ici !</div>';
-    return;
-  }
+  if (tasks.length === 0) { tableEl.innerHTML = '<div class="empty-state" style="padding:40px;text-align:center">Aucune tâche ici !</div>'; updateSubs(); return; }
   tableEl.innerHTML = tasks.map(([tid, t]) => {
     const m = state.matieres[t.matiereId];
     const c = m ? COLORS[m.colorIdx||0] : {bg:'#eee',text:'#666',dot:'#aaa'};
     const dl = daysLeft(t.date);
-    let dlClass = '';
-    if (!t.done && dl !== null) {
-      if (dl <= 1) dlClass = 'urgent';
-      else if (dl <= 4) dlClass = 'soon';
-    }
+    let dlClass = (!t.done && dl !== null) ? (dl <= 1 ? 'urgent' : dl <= 4 ? 'soon' : '') : '';
     return `<div class="task-row ${t.done?'done':''}">
       <div class="task-check ${t.done?'checked':''}" onclick="toggleTask('${tid}')"></div>
       <div class="task-matiere-dot" style="background:${c.dot}"></div>
@@ -857,175 +404,71 @@ function renderToutes() {
       ${m?`<span class="task-matiere-label" style="background:${c.bg};color:${c.text}">${m.name}</span>`:''}
       <span class="task-type-badge ${t.type==='groupe'?'groupe':''}">${t.type==='groupe'?'Groupe':'Individuel'}</span>
       <div class="task-deadline ${dlClass}">${t.date ? formatDeadline(t.date, dl) : '—'}</div>
-      <button class="task-del" onclick="editTask('${tid}')" style="margin-right:2px;font-size:14px">✎</button><button class="task-del" onclick="deleteTask('${tid}')">×</button>
+      <button class="task-del" onclick="editTask('${tid}')" style="font-size:14px">✎</button>
+      <button class="task-del" onclick="deleteTask('${tid}')">×</button>
     </div>`;
   }).join('');
-
   updateSubs();
 }
 
 window.setFilterMatiere = function(id) { filterMatiere = id; renderToutes(); }
 window.setFilterStatus = function(s) { filterStatus = s; renderToutes(); }
 
-// ── MODALS ────────────────────────────────────
 window.openModal = function(type, id) {
   const overlay = document.getElementById('modal-overlay');
   const content = document.getElementById('modal-content');
-  currentModalType = type;
-  currentModalId = id;
-
+  currentModalType = type; currentModalId = id;
   if (type === 'matiere') {
-    content.innerHTML = `
-      <div class="modal-title">Nouvelle matière</div>
-      <div class="form-group">
-        <label class="form-label">Nom de la matière</label>
-        <input class="form-input" id="m-name" placeholder="ex: Économétrie" />
-      </div>
+    window._selectedEmoji = '📚'; window._selectedColor = 0;
+    content.innerHTML = `<div class="modal-title">Nouvelle matière</div>
+      <div class="form-group"><label class="form-label">Nom de la matière</label><input class="form-input" id="m-name" placeholder="ex: Économétrie" /></div>
       <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Professeur</label>
-          <input class="form-input" id="m-prof" placeholder="Nom du prof" />
-        </div>
-        <div class="form-group">
-          <label class="form-label">Coefficient</label>
-          <input class="form-input" id="m-coeff" type="number" placeholder="ex: 3" />
-        </div>
+        <div class="form-group"><label class="form-label">Professeur</label><input class="form-input" id="m-prof" placeholder="Nom du prof" /></div>
+        <div class="form-group"><label class="form-label">Coefficient</label><input class="form-input" id="m-coeff" type="number" placeholder="ex: 3" /></div>
       </div>
-      <div class="form-group">
-        <label class="form-label">Emoji</label>
-        <div style="display:flex;gap:8px;flex-wrap:wrap" id="emoji-picker">
-          ${EMOJIS.map(e => `<span style="font-size:24px;cursor:pointer;padding:4px;border-radius:6px;transition:background .1s" onclick="selectEmoji(this,'${e}')">${e}</span>`).join('')}
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Couleur</label>
-        <div class="color-picker" id="color-picker">
-          ${COLORS.map((c,i) => `<div class="color-opt ${i===0?'selected':''}" style="background:${c.bg};border-color:${i===0?'#333':'transparent'}" onclick="selectColor(this,${i})" data-idx="${i}"></div>`).join('')}
-        </div>
-      </div>
-      <div class="modal-actions">
-        <button class="btn btn-ghost" onclick="closeModal()">Annuler</button>
-        <button class="btn btn-primary" onclick="saveMatiere()">Enregistrer</button>
-      </div>`;
-    window._selectedEmoji = '📚';
-    window._selectedColor = 0;
-
+      <div class="form-group"><label class="form-label">Emoji</label><div style="display:flex;gap:8px;flex-wrap:wrap" id="emoji-picker">${EMOJIS.map(e => `<span style="font-size:24px;cursor:pointer;padding:4px;border-radius:6px" onclick="selectEmoji(this,'${e}')">${e}</span>`).join('')}</div></div>
+      <div class="form-group"><label class="form-label">Couleur</label><div class="color-picker" id="color-picker">${COLORS.map((c,i) => `<div class="color-opt ${i===0?'selected':''}" style="background:${c.bg};border-color:${i===0?'#333':'transparent'}" onclick="selectColor(this,${i})"></div>`).join('')}</div></div>
+      <div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal()">Annuler</button><button class="btn btn-primary" onclick="saveMatiere()">Enregistrer</button></div>`;
   } else if (type === 'edit-matiere') {
-    const m = state.matieres[id];
-    if (!m) return;
-    window._selectedEmoji = m.emoji || '📚';
-    window._selectedColor = m.colorIdx || 0;
-    content.innerHTML = `
-      <div class="modal-title">Modifier la matière</div>
-      <div class="form-group">
-        <label class="form-label">Nom de la matière</label>
-        <input class="form-input" id="m-name" value="${m.name}" />
-      </div>
+    const m = state.matieres[id]; if (!m) return;
+    window._selectedEmoji = m.emoji || '📚'; window._selectedColor = m.colorIdx || 0;
+    content.innerHTML = `<div class="modal-title">Modifier la matière</div>
+      <div class="form-group"><label class="form-label">Nom de la matière</label><input class="form-input" id="m-name" value="${m.name}" /></div>
       <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Professeur</label>
-          <input class="form-input" id="m-prof" value="${m.prof||''}" />
-        </div>
-        <div class="form-group">
-          <label class="form-label">Coefficient</label>
-          <input class="form-input" id="m-coeff" type="number" value="${m.coeff||''}" />
-        </div>
+        <div class="form-group"><label class="form-label">Professeur</label><input class="form-input" id="m-prof" value="${m.prof||''}" /></div>
+        <div class="form-group"><label class="form-label">Coefficient</label><input class="form-input" id="m-coeff" type="number" value="${m.coeff||''}" /></div>
       </div>
-      <div class="form-group">
-        <label class="form-label">Emoji</label>
-        <div style="display:flex;gap:8px;flex-wrap:wrap" id="emoji-picker">
-          ${EMOJIS.map(e => `<span style="font-size:24px;cursor:pointer;padding:4px;border-radius:6px;background:${e===window._selectedEmoji?'#eee':'transparent'};transition:background .1s" onclick="selectEmoji(this,'${e}')">${e}</span>`).join('')}
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Couleur</label>
-        <div class="color-picker" id="color-picker">
-          ${COLORS.map((c,i) => `<div class="color-opt ${i===window._selectedColor?'selected':''}" style="background:${c.bg};border-color:${i===window._selectedColor?'#333':'transparent'}" onclick="selectColor(this,${i})" data-idx="${i}"></div>`).join('')}
-        </div>
-      </div>
-      <div class="modal-actions">
-        <button class="btn btn-ghost" onclick="closeModal()">Annuler</button>
-        <button class="btn btn-primary" onclick="updateMatiere('${id}')">Enregistrer</button>
-      </div>`;
-
+      <div class="form-group"><label class="form-label">Emoji</label><div style="display:flex;gap:8px;flex-wrap:wrap" id="emoji-picker">${EMOJIS.map(e => `<span style="font-size:24px;cursor:pointer;padding:4px;border-radius:6px;background:${e===window._selectedEmoji?'#eee':'transparent'}" onclick="selectEmoji(this,'${e}')">${e}</span>`).join('')}</div></div>
+      <div class="form-group"><label class="form-label">Couleur</label><div class="color-picker" id="color-picker">${COLORS.map((c,i) => `<div class="color-opt ${i===window._selectedColor?'selected':''}" style="background:${c.bg};border-color:${i===window._selectedColor?'#333':'transparent'}" onclick="selectColor(this,${i})"></div>`).join('')}</div></div>
+      <div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal()">Annuler</button><button class="btn btn-primary" onclick="updateMatiere('${id}')">Enregistrer</button></div>`;
   } else if (type === 'eval') {
-    content.innerHTML = `
-      <div class="modal-title">Nouvelle évaluation</div>
-      <div class="form-group">
-        <label class="form-label">Nom</label>
-        <input class="form-input" id="e-name" placeholder="ex: Partiel final, Oral, Rendu de mémoire..." />
-      </div>
+    content.innerHTML = `<div class="modal-title">Nouvelle évaluation</div>
+      <div class="form-group"><label class="form-label">Nom</label><input class="form-input" id="e-name" placeholder="ex: Partiel final, Oral..." /></div>
       <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Date</label>
-          <input class="form-input" id="e-date" type="date" />
-        </div>
-        <div class="form-group">
-          <label class="form-label">% de la note finale</label>
-          <input class="form-input" id="e-pct" type="number" min="0" max="100" placeholder="ex: 40" />
-        </div>
+        <div class="form-group"><label class="form-label">Date</label><input class="form-input" id="e-date" type="date" /></div>
+        <div class="form-group"><label class="form-label">% de la note finale</label><input class="form-input" id="e-pct" type="number" min="0" max="100" placeholder="ex: 40" /></div>
       </div>
-      <div class="form-group">
-        <label class="form-label">Statut</label>
-        <select class="form-input" id="e-status">
-          <option value="todo">À venir</option>
-          <option value="done">Déjà passé</option>
-        </select>
-      </div>
-      <div class="modal-actions">
-        <button class="btn btn-ghost" onclick="closeModal()">Annuler</button>
-        <button class="btn btn-primary" onclick="saveEval()">Enregistrer</button>
-      </div>`;
-
+      <div class="form-group"><label class="form-label">Statut</label><select class="form-input" id="e-status"><option value="todo">À venir</option><option value="done">Déjà passé</option></select></div>
+      <div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal()">Annuler</button><button class="btn btn-primary" onclick="saveEval()">Enregistrer</button></div>`;
   } else if (type === 'task-detail' || type === 'task-global') {
     const matieres = Object.entries(state.matieres);
-    content.innerHTML = `
-      <div class="modal-title" id="task-modal-title">Nouvelle tâche</div>
-      <div class="form-group">
-        <label class="form-label">Intitulé</label>
-        <input class="form-input" id="t-name" placeholder="ex: Lire chapitre 4, Rendre DM..." />
+    editingTaskId = null;
+    content.innerHTML = `<div class="modal-title">Nouvelle tâche</div>
+      <div class="form-group"><label class="form-label">Intitulé</label><input class="form-input" id="t-name" placeholder="ex: Lire chapitre 4, Rendre DM..." /></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Matière</label><select class="form-input" id="t-matiere"><option value="">— Aucune —</option>${matieres.map(([mid, m]) => `<option value="${mid}" ${type==='task-detail'&&mid===currentMatiereId?'selected':''}>${m.name}</option>`).join('')}</select></div>
+        <div class="form-group"><label class="form-label">Date limite</label><input class="form-input" id="t-date" type="date" /></div>
       </div>
       <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Matière</label>
-          <select class="form-input" id="t-matiere">
-            <option value="">— Aucune —</option>
-            ${matieres.map(([mid, m]) => `<option value="${mid}" ${type==='task-detail'&&mid===currentMatiereId?'selected':''}>${m.name}</option>`).join('')}
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Date limite</label>
-          <input class="form-input" id="t-date" type="date" />
-        </div>
+        <div class="form-group"><label class="form-label">Type</label><select class="form-input" id="t-type"><option value="perso">Individuel</option><option value="groupe">Groupe</option></select></div>
+        <div class="form-group"><label class="form-label">Catégorie</label><select class="form-input" id="t-cat"><option value="rendu">Rendu</option><option value="revision">Révisions</option><option value="lecture">Lecture</option><option value="autre">Autre</option></select></div>
       </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Type</label>
-          <select class="form-input" id="t-type">
-            <option value="perso">Individuel</option>
-            <option value="groupe">Groupe</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Catégorie</label>
-          <select class="form-input" id="t-cat">
-            <option value="rendu">Rendu</option>
-            <option value="revision">Révisions</option>
-            <option value="lecture">Lecture</option>
-            <option value="autre">Autre</option>
-          </select>
-        </div>
-      </div>
-      <div class="modal-actions">
-        <button class="btn btn-ghost" onclick="closeModal()">Annuler</button>
-        <button class="btn btn-primary" id="task-save-btn" onclick="saveTask()">Enregistrer</button>
-      </div>`;
+      <div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal()">Annuler</button><button class="btn btn-primary" onclick="saveTask()">Enregistrer</button></div>`;
   }
-
   overlay.classList.add('open');
 }
 
-let currentModalType = null, currentModalId = null;
+let currentModalType = null, currentModalId = null, editingTaskId = null;
 
 window.selectEmoji = function(el, emoji) {
   window._selectedEmoji = emoji;
@@ -1034,251 +477,97 @@ window.selectEmoji = function(el, emoji) {
 }
 window.selectColor = function(el, idx) {
   window._selectedColor = idx;
-  document.querySelectorAll('.color-opt').forEach(o => {
-    o.classList.remove('selected');
-    o.style.borderColor = 'transparent';
-  });
-  el.classList.add('selected');
-  el.style.borderColor = '#333';
+  document.querySelectorAll('.color-opt').forEach(o => { o.classList.remove('selected'); o.style.borderColor = 'transparent'; });
+  el.classList.add('selected'); el.style.borderColor = '#333';
 }
-
 window.saveMatiere = async function() {
-  const name = document.getElementById('m-name').value.trim();
-  if (!name) return;
-  const id = uid();
-  state.matieres[id] = {
-    name,
-    prof: document.getElementById('m-prof').value.trim(),
-    coeff: document.getElementById('m-coeff').value,
-    emoji: window._selectedEmoji || '📚',
-    colorIdx: window._selectedColor || 0
-  };
-  await saveDB();
-  closeModal();
-  toast('Matière ajoutée !');
+  const name = document.getElementById('m-name').value.trim(); if (!name) return;
+  state.matieres[uid()] = { name, prof: document.getElementById('m-prof').value.trim(), coeff: document.getElementById('m-coeff').value, emoji: window._selectedEmoji || '📚', colorIdx: window._selectedColor || 0 };
+  await saveDB(); closeModal(); toast('Matière ajoutée !');
 }
-
 window.updateMatiere = async function(id) {
-  const name = document.getElementById('m-name').value.trim();
-  if (!name) return;
-  state.matieres[id] = {
-    ...state.matieres[id],
-    name,
-    prof: document.getElementById('m-prof').value.trim(),
-    coeff: document.getElementById('m-coeff').value,
-    emoji: window._selectedEmoji,
-    colorIdx: window._selectedColor
-  };
-  await saveDB();
-  closeModal();
-  toast('Matière modifiée !');
+  const name = document.getElementById('m-name').value.trim(); if (!name) return;
+  state.matieres[id] = { ...state.matieres[id], name, prof: document.getElementById('m-prof').value.trim(), coeff: document.getElementById('m-coeff').value, emoji: window._selectedEmoji, colorIdx: window._selectedColor };
+  await saveDB(); closeModal(); toast('Matière modifiée !');
 }
-
 window.deleteMatiere = async function(id) {
   if (!confirm('Supprimer cette matière et toutes ses données ?')) return;
   delete state.matieres[id];
   Object.keys(state.tasks).forEach(k => { if (state.tasks[k].matiereId === id) delete state.tasks[k]; });
   Object.keys(state.evals).forEach(k => { if (state.evals[k].matiereId === id) delete state.evals[k]; });
-  await saveDB();
-  showView('matieres');
-  toast('Matière supprimée');
+  await saveDB(); showView('matieres'); toast('Matière supprimée');
 }
-
 window.saveEval = async function() {
-  const name = document.getElementById('e-name').value.trim();
-  if (!name) return;
-  const id = uid();
-  state.evals[id] = {
-    name,
-    date: document.getElementById('e-date').value,
-    pct: document.getElementById('e-pct').value,
-    status: document.getElementById('e-status').value,
-    matiereId: currentMatiereId
-  };
-  await saveDB();
-  closeModal();
-  toast('Évaluation ajoutée !');
+  const name = document.getElementById('e-name').value.trim(); if (!name) return;
+  state.evals[uid()] = { name, date: document.getElementById('e-date').value, pct: document.getElementById('e-pct').value, status: document.getElementById('e-status').value, matiereId: currentMatiereId };
+  await saveDB(); closeModal(); toast('Évaluation ajoutée !');
 }
-
-let editingTaskId = null;
-
 window.editTask = function(id) {
-  const t = state.tasks[id];
-  if (!t) return;
-  const matieres = Object.entries(state.matieres);
+  const t = state.tasks[id]; if (!t) return;
   editingTaskId = id;
-  const overlay = document.getElementById('modal-overlay');
+  const matieres = Object.entries(state.matieres);
   const content = document.getElementById('modal-content');
-  content.innerHTML = `
-      <div class="modal-title">Modifier la tâche</div>
-      <div class="form-group">
-        <label class="form-label">Intitulé</label>
-        <input class="form-input" id="t-name" value="${t.name}" />
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Matière</label>
-          <select class="form-input" id="t-matiere">
-            <option value="">— Aucune —</option>
-            ${matieres.map(([mid, m]) => `<option value="${mid}" ${t.matiereId===mid?'selected':''}>${m.name}</option>`).join('')}
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Date limite</label>
-          <input class="form-input" id="t-date" type="date" value="${t.date||''}" />
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Type</label>
-          <select class="form-input" id="t-type">
-            <option value="perso" ${t.type==='perso'?'selected':''}>Individuel</option>
-            <option value="groupe" ${t.type==='groupe'?'selected':''}>Groupe</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Catégorie</label>
-          <select class="form-input" id="t-cat">
-            <option value="rendu" ${t.cat==='rendu'?'selected':''}>Rendu</option>
-            <option value="revision" ${t.cat==='revision'?'selected':''}>Révisions</option>
-            <option value="lecture" ${t.cat==='lecture'?'selected':''}>Lecture</option>
-            <option value="autre" ${t.cat==='autre'?'selected':''}>Autre</option>
-          </select>
-        </div>
-      </div>
-      <div class="modal-actions">
-        <button class="btn btn-ghost" onclick="closeModal()">Annuler</button>
-        <button class="btn btn-primary" onclick="saveTask()">Enregistrer</button>
-      </div>`;
-  overlay.classList.add('open');
+  content.innerHTML = `<div class="modal-title">Modifier la tâche</div>
+    <div class="form-group"><label class="form-label">Intitulé</label><input class="form-input" id="t-name" value="${t.name}" /></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Matière</label><select class="form-input" id="t-matiere"><option value="">— Aucune —</option>${matieres.map(([mid, m]) => `<option value="${mid}" ${t.matiereId===mid?'selected':''}>${m.name}</option>`).join('')}</select></div>
+      <div class="form-group"><label class="form-label">Date limite</label><input class="form-input" id="t-date" type="date" value="${t.date||''}" /></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Type</label><select class="form-input" id="t-type"><option value="perso" ${t.type==='perso'?'selected':''}>Individuel</option><option value="groupe" ${t.type==='groupe'?'selected':''}>Groupe</option></select></div>
+      <div class="form-group"><label class="form-label">Catégorie</label><select class="form-input" id="t-cat"><option value="rendu" ${t.cat==='rendu'?'selected':''}>Rendu</option><option value="revision" ${t.cat==='revision'?'selected':''}>Révisions</option><option value="lecture" ${t.cat==='lecture'?'selected':''}>Lecture</option><option value="autre" ${t.cat==='autre'?'selected':''}>Autre</option></select></div>
+    </div>
+    <div class="modal-actions"><button class="btn btn-ghost" onclick="closeModal()">Annuler</button><button class="btn btn-primary" onclick="saveTask()">Enregistrer</button></div>`;
+  document.getElementById('modal-overlay').classList.add('open');
 }
-
 window.saveTask = async function() {
-  const name = document.getElementById('t-name').value.trim();
-  if (!name) return;
-  if (editingTaskId) {
-    state.tasks[editingTaskId] = {
-      ...state.tasks[editingTaskId],
-      name,
-      matiereId: document.getElementById('t-matiere').value || null,
-      date: document.getElementById('t-date').value,
-      type: document.getElementById('t-type').value,
-      cat: document.getElementById('t-cat').value,
-    };
-    editingTaskId = null;
-    await saveDB(); closeModal(); toast('Tâche modifiée !');
-  } else {
-    const id = uid();
-    state.tasks[id] = {
-      name,
-      matiereId: document.getElementById('t-matiere').value || null,
-      date: document.getElementById('t-date').value,
-      type: document.getElementById('t-type').value,
-      cat: document.getElementById('t-cat').value,
-      done: false
-    };
-    await saveDB(); closeModal(); toast('Tâche ajoutée !');
-  }
+  const name = document.getElementById('t-name').value.trim(); if (!name) return;
+  const taskData = { name, matiereId: document.getElementById('t-matiere').value || null, date: document.getElementById('t-date').value, type: document.getElementById('t-type').value, cat: document.getElementById('t-cat').value };
+  if (editingTaskId) { state.tasks[editingTaskId] = { ...state.tasks[editingTaskId], ...taskData }; editingTaskId = null; await saveDB(); closeModal(); toast('Tâche modifiée !'); }
+  else { state.tasks[uid()] = { ...taskData, done: false }; await saveDB(); closeModal(); toast('Tâche ajoutée !'); }
 }
+window.deleteTask = async function(id) { delete state.tasks[id]; await saveDB(); toast('Tâche supprimée'); }
+window.deleteEval = async function(id) { delete state.evals[id]; await saveDB(); toast('Évaluation supprimée'); }
+window.toggleTask = async function(id) { if (state.tasks[id]) { state.tasks[id].done = !state.tasks[id].done; await saveDB(); } }
+window.closeModal = function() { document.getElementById('modal-overlay').classList.remove('open'); }
+window.closeModalOutside = function(e) { if (e.target === document.getElementById('modal-overlay')) closeModal(); }
 
-window.deleteTask = async function(id) {
-  delete state.tasks[id];
-  await saveDB();
-  toast('Tâche supprimée');
-}
+function toast(msg) { const el = document.getElementById('toast'); el.textContent = msg; el.classList.add('show'); setTimeout(() => el.classList.remove('show'), 2200); }
+function daysLeft(dateStr) { if (!dateStr) return null; const d = new Date(dateStr), t = new Date(); t.setHours(0,0,0,0); return Math.round((d - t) / 86400000); }
+function formatDate(dateStr) { if (!dateStr) return ''; return new Date(dateStr).toLocaleDateString('fr-FR', {day:'numeric', month:'short'}); }
+function formatDeadline(dateStr, dl) { if (dl === null) return '—'; if (dl < 0) return 'En retard'; if (dl === 0) return "Aujourd'hui"; if (dl === 1) return 'Demain'; if (dl <= 7) return `Dans ${dl}j`; return formatDate(dateStr); }
 
-window.deleteEval = async function(id) {
-  delete state.evals[id];
-  await saveDB();
-  toast('Évaluation supprimée');
-}
-
-window.toggleTask = async function(id) {
-  if (state.tasks[id]) {
-    state.tasks[id].done = !state.tasks[id].done;
-    await saveDB();
-  }
-}
-
-window.closeModal = function() {
-  document.getElementById('modal-overlay').classList.remove('open');
-}
-window.closeModalOutside = function(e) {
-  if (e.target === document.getElementById('modal-overlay')) closeModal();
-}
-
-function toast(msg) {
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.classList.add('show');
-  setTimeout(() => el.classList.remove('show'), 2200);
-}
-
-// ── UTILS ─────────────────────────────────────
-function daysLeft(dateStr) {
-  if (!dateStr) return null;
-  const d = new Date(dateStr);
-  const t = new Date(); t.setHours(0,0,0,0);
-  return Math.round((d - t) / 86400000);
-}
-function formatDate(dateStr) {
-  if (!dateStr) return '';
-  return new Date(dateStr).toLocaleDateString('fr-FR', {day:'numeric', month:'short'});
-}
-function formatDeadline(dateStr, dl) {
-  if (dl === null) return '—';
-  if (dl < 0) return `En retard`;
-  if (dl === 0) return `Aujourd'hui`;
-  if (dl === 1) return `Demain`;
-  if (dl <= 7) return `Dans ${dl}j`;
-  return formatDate(dateStr);
-}
-
-// ── NAV ───────────────────────────────────────
 window.showView = function(name) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
   document.getElementById('view-' + name).classList.add('active');
   if (name === 'matieres') document.querySelector('.nav-tab:nth-child(1)').classList.add('active');
   else if (name === 'toutes') document.querySelector('.nav-tab:nth-child(2)').classList.add('active');
-  else if (name === 'memoire') document.querySelector('.nav-tab:nth-child(3)').classList.add('active');
+  else if (name === 'memoire') { document.querySelector('.nav-tab:nth-child(3)').classList.add('active'); renderMemoire(); }
 }
 
 renderAll();
 
-// ── NAV UPDATE ─────────────────────────────────
-const _origShowView = window.showView;
-window.showView = function(name) {
-  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-  document.getElementById('view-' + name).classList.add('active');
-  if (name === 'matieres') document.querySelector('.nav-tab:nth-child(1)').classList.add('active');
-  else if (name === 'toutes') document.querySelector('.nav-tab:nth-child(2)').classList.add('active');
-  else if (name === 'memoire') document.querySelector('.nav-tab:nth-child(3)').classList.add('active');
-  else if (name === 'memoire') { document.querySelector('.nav-tab:nth-child(3)').classList.add('active'); renderMemoire(); }
-}
-
-// ── MEMOIRE STATE ──────────────────────────────
+// ══════════════════════════════════════════════
+// MÉMOIRE
+// ══════════════════════════════════════════════
 const PARTIES = [
   { id:'rdl', name:'Revue de littérature', color:'#9B72D4', desc:'Du panoptique à la surveillance numérique, visibilité comme dynamique organisationnelle, visibilisation en gestion de projet distribué (IJPM).' },
   { id:'ct', name:'Cadre théorique', color:'#4CAF82', desc:'Hafermalz + Leclercq-V. + Goffman + Merleau-Ponty. Les 4 axes de tension. Pourquoi ces auteurs.' },
   { id:'terrain', name:'Terrain', color:'#F08050', desc:'Ethnographie chez Sanofi. Entretiens formels, observations, vignettes, codage thématique.' }
 ];
-
 const DEFAULT_LECTURES = [
-  { id:'l1', titre:'Exil de la présence', auteurs:'Hafermalz (2021)', statut:'lu', notes:'Infrastructure de visibilité. Concept d\'exil — être invisible = ne pas exister pour l\'organisation.', tags:['cadre-théo'], partie:'ct' },
+  { id:'l1', titre:'Exil de la présence', auteurs:'Hafermalz (2021)', statut:'lu', notes:"Infrastructure de visibilité. Concept d'exil — être invisible = ne pas exister pour l'organisation.", tags:['cadre-théo'], partie:'ct' },
   { id:'l2', titre:'Seeing to be seen', auteurs:'Leclercq-Vandelannoitte', statut:'lu', notes:'Auto-contrôle et visibilité stratégique. Les individus produisent leur propre visibilité.', tags:['cadre-théo'], partie:'ct' },
   { id:'l3', titre:'La mise en scène de la vie quotidienne', auteurs:'Goffman', statut:'en-cours', notes:'Dramaturgie, front stage / back stage. Clé pour finding 03.', tags:['cadre-théo'], partie:'ct' },
   { id:'l4', titre:'Phénoménologie de la perception', auteurs:'Merleau-Ponty', statut:'en-cours', notes:'Invisibilité fonctionnelle. Pour agir, il faut rendre invisible beaucoup de choses.', tags:['cadre-théo'], partie:'ct' },
-  { id:'l5', titre:'Traces & visibilisation de l\'activité', auteurs:'Beauvalet', statut:'lu', notes:'Trace ≠ activité réelle. Lien direct avec la scène du PO et les tickets Jira.', tags:['cadre-théo'], partie:'ct' },
+  { id:'l5', titre:"Traces & visibilisation de l'activité", auteurs:'Beauvalet', statut:'lu', notes:'Trace ≠ activité réelle. Lien direct avec la scène du PO et les tickets Jira.', tags:['cadre-théo'], partie:'ct' },
   { id:'l6', titre:'Management désincarné', auteurs:'Dujarier (2015)', statut:'lu', notes:'Le management à distance désincarné. Outils comme substituts de la présence.', tags:['cadre-théo'], partie:'ct' },
   { id:'l7', titre:'IJPM — 5 articles (accountability, alignment, distributed PM)', auteurs:'IJPM', statut:'à-lire', notes:'À ficher. 1 page max par article : idée principale + concept + lien terrain.', tags:['revue-lit'], partie:'rdl' },
 ];
-
 const DEFAULT_TERRAIN = [
-  { id:'t1', date:'Novembre 2024', context:'Sprint review — équipe distribuée FR/IN/US', observation:'Le PO ouvre Jira et montre un board avec des tickets en Done. Il dit ne pas comprendre ce qui a réellement été livré. Plusieurs tickets sont fermés sans commentaire ni lien PR. Il demande à l\'équipe d\'expliquer — quelques secondes de silence, puis une personne énumère oralement ce qui a été fait.', verbatim:'"The ticket says done but I don\'t know what done means here."', interpretation:'Décalage entre la trace numérique et l\'activité réelle. La visibilité produite par l\'outil est incomplète — le PO doit reconstruire l\'activité par l\'oral. Ce que l\'outil invisibilise est aussi important que ce qu\'il visibilise.', tags:['visibilité','invisibilité','outils'], retrospective:true }
+  { id:'t1', date:'Novembre 2024', context:'Sprint review — équipe distribuée FR/IN/US', observation:"Le PO ouvre Jira et montre un board avec des tickets en Done. Il dit ne pas comprendre ce qui a réellement été livré. Plusieurs tickets sont fermés sans commentaire ni lien PR. Il demande à l'équipe d'expliquer — quelques secondes de silence, puis une personne énumère oralement ce qui a été fait.", verbatim:'"The ticket says done but I don\'t know what done means here."', interpretation:"Décalage entre la trace numérique et l'activité réelle. La visibilité produite par l'outil est incomplète — le PO doit reconstruire l'activité par l'oral. Ce que l'outil invisibilise est aussi important que ce qu'il visibilise.", tags:['visibilité','invisibilité','outils'], retrospective:true }
 ];
-
 const DEFAULT_PARTIE_TASKS = [
   { id:'pt1', name:'Lire Goffman — ch. 1 de La mise en scène', partie:'ct', done:false, date:'2025-06-15' },
   { id:'pt2', name:'Lire Merleau-Ponty — passages sur la perception sélective', partie:'ct', done:false, date:'2025-06-15' },
@@ -1293,7 +582,6 @@ const DEFAULT_PARTIE_TASKS = [
   { id:'pt11', name:'Rédiger les findings ch. V', partie:'terrain', done:false, date:'2025-08-10' },
   { id:'pt12', name:'Rédiger discussion ch. VI', partie:'terrain', done:false, date:'2025-08-15' },
 ];
-
 const DEFAULT_MEM_TASKS = [
   { id:'mt1', name:'Envoyer plan détaillé au directeur', done:false, date:'2025-06-10', partie:'rdl' },
   { id:'mt2', name:'Confirmer anonymisation terrain avec RH Sanofi', done:false, date:'2025-06-20', partie:'terrain' },
@@ -1301,22 +589,18 @@ const DEFAULT_MEM_TASKS = [
   { id:'mt4', name:'Relecture globale + mise en forme', done:false, date:'2025-08-20', partie:'ct' },
   { id:'mt5', name:'Envoyer version finale au directeur (buffer 1 sem)', done:false, date:'2025-08-22', partie:'terrain' },
 ];
-
 const DEFAULT_MEM_INFO = {
   problematique: "How is activity made visible and coordinated in distributed digital projects, and how do these visibility mechanisms redefine forms of self-control and individual engagement?",
-  directeur: "F.-X. de Vaujany",
-  terrain: "Sanofi — équipes FR/IN/US",
-  rendu: "Fin août 2025",
-  langue: "Anglais"
+  directeur: "F.-X. de Vaujany", terrain: "Sanofi — équipes FR/IN/US", rendu: "Fin août 2025", langue: "Anglais"
 };
-let memState = { lectures:[], terrain:[], partieTasks:[], memTasks:[], info: {...DEFAULT_MEM_INFO} };
+
+let memState = { lectures:[], terrain:[], partieTasks:[], memTasks:[], info:{...DEFAULT_MEM_INFO} };
 let lecFilter = 'all';
 
 async function loadMemoire() {
   try {
     if (useFirebase) {
-      const memRef = ref(db, 'studyspace_memoire');
-      onValue(memRef, snap => {
+      onValue(ref(db, 'studyspace_memoire'), snap => {
         const d = snap.val();
         if (d) {
           memState.lectures = d.lectures || DEFAULT_LECTURES;
@@ -1325,19 +609,19 @@ async function loadMemoire() {
           memState.memTasks = d.memTasks || DEFAULT_MEM_TASKS;
           memState.info = d.info || {...DEFAULT_MEM_INFO};
         } else {
-          memState = { lectures: DEFAULT_LECTURES, terrain: DEFAULT_TERRAIN, partieTasks: DEFAULT_PARTIE_TASKS, memTasks: DEFAULT_MEM_TASKS, info: {...DEFAULT_MEM_INFO} };
+          memState = { lectures:DEFAULT_LECTURES, terrain:DEFAULT_TERRAIN, partieTasks:DEFAULT_PARTIE_TASKS, memTasks:DEFAULT_MEM_TASKS, info:{...DEFAULT_MEM_INFO} };
           saveMemoire();
         }
         renderMemoire();
       });
     } else {
       const saved = localStorage.getItem('studyspace_memoire');
-      memState = saved ? JSON.parse(saved) : { lectures: DEFAULT_LECTURES, terrain: DEFAULT_TERRAIN, partieTasks: DEFAULT_PARTIE_TASKS, memTasks: DEFAULT_MEM_TASKS, info: {...DEFAULT_MEM_INFO} };
+      memState = saved ? JSON.parse(saved) : { lectures:DEFAULT_LECTURES, terrain:DEFAULT_TERRAIN, partieTasks:DEFAULT_PARTIE_TASKS, memTasks:DEFAULT_MEM_TASKS, info:{...DEFAULT_MEM_INFO} };
       if (!memState.info) memState.info = {...DEFAULT_MEM_INFO};
       renderMemoire();
     }
   } catch(e) {
-    memState = { lectures: DEFAULT_LECTURES, terrain: DEFAULT_TERRAIN, partieTasks: DEFAULT_PARTIE_TASKS, memTasks: DEFAULT_MEM_TASKS };
+    memState = { lectures:DEFAULT_LECTURES, terrain:DEFAULT_TERRAIN, partieTasks:DEFAULT_PARTIE_TASKS, memTasks:DEFAULT_MEM_TASKS, info:{...DEFAULT_MEM_INFO} };
     renderMemoire();
   }
 }
@@ -1357,13 +641,7 @@ window.showMemTab = function(id, btn) {
   renderMemoire();
 }
 
-function renderMemoire() {
-  renderMemOverview();
-  renderParties();
-  renderLectures();
-  renderTerrain();
-  renderMemTasks();
-}
+function renderMemoire() { renderMemOverview(); renderParties(); renderLectures(); renderTerrain(); renderMemTasks(); }
 
 function renderMemOverview() {
   const info = memState.info || DEFAULT_MEM_INFO;
@@ -1390,16 +668,11 @@ function renderMemOverview() {
       </div>
     </div>`;
   const lu = memState.lectures.filter(l => l.statut === 'lu').length;
-  const total = memState.lectures.length;
-  const obs = memState.terrain.length;
-  const tasksDone = memState.partieTasks.filter(t => t.done).length;
-  const tasksTodo = memState.partieTasks.filter(t => !t.done).length;
   document.getElementById('mem-stats-el').innerHTML = `
-    <div class="mem-stat"><div class="mem-stat-n">${lu}/${total}</div><div class="mem-stat-l">Lectures faites</div></div>
-    <div class="mem-stat"><div class="mem-stat-n">${obs}</div><div class="mem-stat-l">Observations terrain</div></div>
-    <div class="mem-stat"><div class="mem-stat-n">${tasksDone}</div><div class="mem-stat-l">Tâches terminées</div></div>
-    <div class="mem-stat"><div class="mem-stat-n">${tasksTodo}</div><div class="mem-stat-l">Tâches restantes</div></div>`;
-
+    <div class="mem-stat"><div class="mem-stat-n">${lu}/${memState.lectures.length}</div><div class="mem-stat-l">Lectures faites</div></div>
+    <div class="mem-stat"><div class="mem-stat-n">${memState.terrain.length}</div><div class="mem-stat-l">Observations terrain</div></div>
+    <div class="mem-stat"><div class="mem-stat-n">${memState.partieTasks.filter(t=>t.done).length}</div><div class="mem-stat-l">Tâches terminées</div></div>
+    <div class="mem-stat"><div class="mem-stat-n">${memState.partieTasks.filter(t=>!t.done).length}</div><div class="mem-stat-l">Tâches restantes</div></div>`;
   document.getElementById('overview-parties').innerHTML = PARTIES.map(p => {
     const tasks = memState.partieTasks.filter(t => t.partie === p.id);
     const done = tasks.filter(t => t.done).length;
@@ -1420,12 +693,11 @@ function renderParties() {
     const done = tasks.filter(t => t.done).length;
     const pct = tasks.length ? Math.round(done/tasks.length*100) : 0;
     const status = pct === 100 ? 'done' : pct > 0 ? 'wip' : 'todo';
-    const statusLabel = { done:'Terminé', wip:'En cours', todo:'À faire' };
     return `<div class="partie-card">
       <div class="partie-header">
         <div class="partie-num">${PARTIES.indexOf(p)+1}</div>
         <div class="partie-name">${p.name}</div>
-        <span class="partie-status ${status}">${statusLabel[status]}</span>
+        <span class="partie-status ${status}">${{done:'Terminé',wip:'En cours',todo:'À faire'}[status]}</span>
       </div>
       <div class="partie-progress"><div class="partie-progress-fill" style="width:${pct}%;background:${p.color}"></div></div>
       <div class="partie-desc">${p.desc}</div>
@@ -1443,32 +715,16 @@ function renderParties() {
   }).join('');
 }
 
-window.togglePartieTask = async function(id) {
-  const t = memState.partieTasks.find(x => x.id === id);
-  if (t) { t.done = !t.done; await saveMemoire(); renderMemoire(); }
-}
-window.deletePartieTask = async function(id) {
-  memState.partieTasks = memState.partieTasks.filter(x => x.id !== id);
-  await saveMemoire(); renderMemoire();
-}
+window.togglePartieTask = async function(id) { const t = memState.partieTasks.find(x=>x.id===id); if(t){t.done=!t.done;await saveMemoire();renderMemoire();} }
+window.deletePartieTask = async function(id) { memState.partieTasks=memState.partieTasks.filter(x=>x.id!==id);await saveMemoire();renderMemoire(); }
 
 function renderLectures() {
-  const statuts = [
-    {id:'all',label:'Tout'},
-    {id:'à-lire',label:'À lire'},
-    {id:'en-cours',label:'En cours'},
-    {id:'lu',label:'Lu'}
-  ];
-  document.getElementById('lec-filters').innerHTML = statuts.map(s =>
-    `<button class="filter-btn ${lecFilter===s.id?'active':''}" onclick="setLecFilter('${s.id}')">${s.label}</button>`
-  ).join('');
-
+  const statuts = [{id:'all',label:'Tout'},{id:'à-lire',label:'À lire'},{id:'en-cours',label:'En cours'},{id:'lu',label:'Lu'}];
+  document.getElementById('lec-filters').innerHTML = statuts.map(s => `<button class="filter-btn ${lecFilter===s.id?'active':''}" onclick="setLecFilter('${s.id}')">${s.label}</button>`).join('');
   const lecs = lecFilter === 'all' ? memState.lectures : memState.lectures.filter(l => l.statut === lecFilter);
   const colors = {'à-lire':'#F08050','en-cours':'#E0A030','lu':'#4CAF82'};
   const labels = {'à-lire':'À lire','en-cours':'En cours','lu':'Lu'};
-
-  document.getElementById('lectures-list').innerHTML = lecs.length === 0
-    ? '<div class="empty-state">Aucune référence ici</div>'
+  document.getElementById('lectures-list').innerHTML = lecs.length === 0 ? '<div class="empty-state">Aucune référence ici</div>'
     : lecs.map(l => `<div class="lec-card">
         <div class="lec-status-dot" style="background:${colors[l.statut]||'#ccc'}"></div>
         <div class="lec-body">
@@ -1486,35 +742,27 @@ function renderLectures() {
             <option value="en-cours" ${l.statut==='en-cours'?'selected':''}>En cours</option>
             <option value="lu" ${l.statut==='lu'?'selected':''}>Lu</option>
           </select>
-          <button style="background:none;border:none;cursor:pointer;color:#bbb;font-size:14px;margin-right:2px" onclick="editLecture('${l.id}')">✎</button><button style="background:none;border:none;cursor:pointer;color:#ccc;font-size:16px" onclick="deleteLecture('${l.id}')">×</button>
+          <button style="background:none;border:none;cursor:pointer;color:#bbb;font-size:14px" onclick="editLecture('${l.id}')">✎</button>
+          <button style="background:none;border:none;cursor:pointer;color:#ccc;font-size:16px" onclick="deleteLecture('${l.id}')">×</button>
         </div>
       </div>`).join('');
 }
 
 window.setLecFilter = function(f) { lecFilter = f; renderLectures(); }
-window.changeLecStatut = async function(id, s) {
-  const l = memState.lectures.find(x => x.id === id);
-  if (l) { l.statut = s; await saveMemoire(); renderLectures(); }
-}
-window.deleteLecture = async function(id) {
-  memState.lectures = memState.lectures.filter(x => x.id !== id);
-  await saveMemoire(); renderLectures();
-}
+window.changeLecStatut = async function(id, s) { const l=memState.lectures.find(x=>x.id===id);if(l){l.statut=s;await saveMemoire();renderLectures();} }
+window.deleteLecture = async function(id) { memState.lectures=memState.lectures.filter(x=>x.id!==id);await saveMemoire();renderLectures(); }
 
 function renderTerrain() {
   document.getElementById('terrain-count').textContent = `${memState.terrain.length} observation${memState.terrain.length!==1?'s':''}`;
   const tagColors = {'visibilité':'#9B72D4','invisibilité':'#4CAF82','coordination':'#E0A030','outils':'#D4727E','auto-contrôle':'#5890B0','culture':'#7AAD4A','goffman':'#4CAF82','hafermalz':'#D4727E','merleau-ponty':'#5890B0'};
-  document.getElementById('terrain-list').innerHTML = memState.terrain.length === 0
-    ? '<div class="empty-state">Aucune observation pour l\'instant</div>'
+  document.getElementById('terrain-list').innerHTML = memState.terrain.length === 0 ? "<div class='empty-state'>Aucune observation pour l'instant</div>"
     : memState.terrain.map(e => `<div class="terrain-entry">
         <div class="terrain-entry-header">
-          <div>
-            <div class="terrain-date">${e.date||'Sans date'}</div>
-            ${e.context?`<div class="terrain-ctx">${e.context}</div>`:''}
-          </div>
+          <div><div class="terrain-date">${e.date||'Sans date'}</div>${e.context?`<div class="terrain-ctx">${e.context}</div>`:''}</div>
           <div style="display:flex;gap:6px;align-items:center">
             ${e.retrospective?`<span style="font-size:11px;padding:2px 8px;border-radius:20px;background:#FFF0D6;color:#8A5A00">rétrospectif</span>`:''}
-            <button style="background:none;border:none;cursor:pointer;color:#bbb;font-size:14px;margin-right:4px" onclick="editTerrain('${e.id}')">✎</button><button style="background:none;border:none;cursor:pointer;color:#ccc;font-size:16px" onclick="deleteTerrain('${e.id}')">×</button>
+            <button style="background:none;border:none;cursor:pointer;color:#bbb;font-size:14px" onclick="editTerrain('${e.id}')">✎</button>
+            <button style="background:none;border:none;cursor:pointer;color:#ccc;font-size:16px" onclick="deleteTerrain('${e.id}')">×</button>
           </div>
         </div>
         ${e.observation?`<div class="terrain-section-label">Observation</div><div class="terrain-text">${e.observation}</div>`:''}
@@ -1525,226 +773,164 @@ function renderTerrain() {
       </div>`).join('');
 }
 
-window.deleteTerrain = async function(id) {
-  memState.terrain = memState.terrain.filter(x => x.id !== id);
-  await saveMemoire(); renderTerrain();
-}
+window.deleteTerrain = async function(id) { memState.terrain=memState.terrain.filter(x=>x.id!==id);await saveMemoire();renderTerrain(); }
 
 function renderMemTasks() {
-  const todo = memState.memTasks.filter(t => !t.done);
-  const done = memState.memTasks.filter(t => t.done);
-  const all = [...todo.sort((a,b)=>(a.date||'9999')>(b.date||'9999')?1:-1), ...done];
+  const todo = memState.memTasks.filter(t=>!t.done);
+  const done = memState.memTasks.filter(t=>t.done);
+  const all = [...todo.sort((a,b)=>(a.date||'9999')>(b.date||'9999')?1:-1),...done];
   document.getElementById('mem-tasks-count').textContent = `${todo.length} tâche${todo.length!==1?'s':''} restante${todo.length!==1?'s':''}`;
-  document.getElementById('mem-tasks-list').innerHTML = all.length === 0
-    ? '<div class="empty-state">Aucune tâche</div>'
+  document.getElementById('mem-tasks-list').innerHTML = all.length === 0 ? '<div class="empty-state">Aucune tâche</div>'
     : all.map(t => {
         const dl = daysLeft(t.date);
-        let dlClass = '';
-        if (!t.done && dl !== null) { if (dl <= 1) dlClass='urgent'; else if (dl <= 5) dlClass='soon'; }
-        const p = PARTIES.find(x => x.id === t.partie);
+        const dlClass = !t.done && dl !== null ? (dl<=1?'urgent':dl<=5?'soon':'') : '';
+        const p = PARTIES.find(x=>x.id===t.partie);
         return `<div class="mem-task-row ${t.done?'done':''}">
           <div class="task-check ${t.done?'checked':''}" onclick="toggleMemTask('${t.id}')"></div>
           <div class="mem-task-name">${t.name}</div>
           ${p?`<span class="mem-task-partie" style="background:${p.color}18;color:${p.color}">${p.name}</span>`:''}
           <div class="mem-task-date ${dlClass}">${t.date?formatDeadline(t.date,dl):'—'}</div>
-          <button style="background:none;border:none;cursor:pointer;color:#bbb;font-size:14px;margin-right:2px" onclick="editMemTask('${t.id}')">✎</button><button style="background:none;border:none;cursor:pointer;color:#ccc;font-size:16px" onclick="deleteMemTask('${t.id}')">×</button>
+          <button style="background:none;border:none;cursor:pointer;color:#bbb;font-size:14px" onclick="editMemTask('${t.id}')">✎</button>
+          <button style="background:none;border:none;cursor:pointer;color:#ccc;font-size:16px" onclick="deleteMemTask('${t.id}')">×</button>
         </div>`;
       }).join('');
 }
 
-window.toggleMemTask = async function(id) {
-  const t = memState.memTasks.find(x => x.id === id);
-  if (t) { t.done = !t.done; await saveMemoire(); renderMemTasks(); }
-}
-window.deleteMemTask = async function(id) {
-  memState.memTasks = memState.memTasks.filter(x => x.id !== id);
-  await saveMemoire(); renderMemTasks();
-}
+window.toggleMemTask = async function(id) { const t=memState.memTasks.find(x=>x.id===id);if(t){t.done=!t.done;await saveMemoire();renderMemTasks();} }
+window.deleteMemTask = async function(id) { memState.memTasks=memState.memTasks.filter(x=>x.id!==id);await saveMemoire();renderMemTasks(); }
 
-// ── MODALS MEMOIRE ────────────────────────────
 window.openMemModal = function(type, partieId) {
   const overlay = document.getElementById('mem-modal-overlay');
   const content = document.getElementById('mem-modal-content');
-
   if (type === 'lecture') {
     content.innerHTML = `<div class="modal-title">Nouvelle référence</div>
       <div class="form-group"><label class="form-label">Titre</label><input class="form-input" id="ml-titre" placeholder="Titre de l'article ou du livre"/></div>
       <div class="form-row">
         <div class="form-group"><label class="form-label">Auteur(s)</label><input class="form-input" id="ml-auteurs" placeholder="Nom (année)"/></div>
-        <div class="form-group"><label class="form-label">Statut</label>
-          <select class="form-input" id="ml-statut"><option value="à-lire">À lire</option><option value="en-cours">En cours</option><option value="lu">Lu</option></select>
-        </div>
+        <div class="form-group"><label class="form-label">Statut</label><select class="form-input" id="ml-statut"><option value="à-lire">À lire</option><option value="en-cours">En cours</option><option value="lu">Lu</option></select></div>
       </div>
-      <div class="form-group"><label class="form-label">Partie associée</label>
-        <select class="form-input" id="ml-partie"><option value="">— Aucune —</option>${PARTIES.map(p=>`<option value="${p.id}">${p.name}</option>`).join('')}</select>
-      </div>
-      <div class="form-group"><label class="form-label">Notes / ce que ça apporte</label><textarea class="form-textarea" id="ml-notes" placeholder="Concepts clés, lien avec ton terrain, citations utiles..."></textarea></div>
-      <div class="modal-actions">
-        <button class="btn btn-ghost" onclick="closeMemModal()">Annuler</button>
-        <button class="btn btn-primary" onclick="saveLecture()">Enregistrer</button>
-      </div>`;
-
+      <div class="form-group"><label class="form-label">Partie associée</label><select class="form-input" id="ml-partie"><option value="">— Aucune —</option>${PARTIES.map(p=>`<option value="${p.id}">${p.name}</option>`).join('')}</select></div>
+      <div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="ml-notes" placeholder="Concepts clés, lien avec ton terrain..."></textarea></div>
+      <div class="modal-actions"><button class="btn btn-ghost" onclick="closeMemModal()">Annuler</button><button class="btn btn-primary" onclick="saveLecture()">Enregistrer</button></div>`;
   } else if (type === 'terrain') {
     const TAGS = ['visibilité','invisibilité','coordination','outils','auto-contrôle','culture','goffman','hafermalz','merleau-ponty'];
+    window._terrainTags = [];
     content.innerHTML = `<div class="modal-title">Nouvelle observation</div>
       <div class="form-row">
         <div class="form-group"><label class="form-label">Date / période</label><input class="form-input" id="mt-date" placeholder="ex. Semaine du 7 juillet"/></div>
         <div class="form-group"><label class="form-label">Contexte</label><input class="form-input" id="mt-ctx" placeholder="ex. Sprint review"/></div>
       </div>
-      <div class="form-group"><label class="form-label">Ce que j'ai observé (faits bruts)</label><textarea class="form-textarea" id="mt-obs" placeholder="Décris la scène..."></textarea></div>
+      <div class="form-group"><label class="form-label">Ce que j'ai observé</label><textarea class="form-textarea" id="mt-obs" placeholder="Décris la scène..."></textarea></div>
       <div class="form-group"><label class="form-label">Verbatim</label><input class="form-input" id="mt-verb" placeholder='"ce que quelqu\'un a dit..."'/></div>
       <div class="form-group"><label class="form-label">Interprétation provisoire</label><textarea class="form-textarea" id="mt-interp" placeholder="Ce que ça révèle..."></textarea></div>
       <div class="form-group"><label class="form-label">Questions soulevées</label><input class="form-input" id="mt-q" placeholder="Questions que cette scène ouvre..."/></div>
-      <div class="form-group"><label class="form-label">Tags</label>
-        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px" id="mt-tags-cloud">
-          ${TAGS.map(t=>`<button class="filter-btn" id="mtt-${t}" onclick="toggleTerrainTag('${t}')">${t}</button>`).join('')}
-        </div>
-      </div>
-      <div class="modal-actions">
-        <button class="btn btn-ghost" onclick="closeMemModal()">Annuler</button>
-        <button class="btn btn-primary" onclick="saveTerrain()">Enregistrer</button>
-      </div>`;
-    window._terrainTags = [];
-
+      <div class="form-group"><label class="form-label">Tags</label><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px" id="mt-tags-cloud">${TAGS.map(t=>`<button class="filter-btn" id="mtt-${t}" onclick="toggleTerrainTag('${t}')">${t}</button>`).join('')}</div></div>
+      <div class="modal-actions"><button class="btn btn-ghost" onclick="closeMemModal()">Annuler</button><button class="btn btn-primary" onclick="saveTerrain()">Enregistrer</button></div>`;
   } else if (type === 'partie-task') {
     content.innerHTML = `<div class="modal-title">Nouvelle tâche</div>
       <div class="form-group"><label class="form-label">Tâche</label><input class="form-input" id="mpt-name" placeholder="ex. Lire Goffman ch. 1"/></div>
       <div class="form-row">
-        <div class="form-group"><label class="form-label">Partie</label>
-          <select class="form-input" id="mpt-partie">${PARTIES.map(p=>`<option value="${p.id}" ${p.id===partieId?'selected':''}>${p.name}</option>`).join('')}</select>
-        </div>
+        <div class="form-group"><label class="form-label">Partie</label><select class="form-input" id="mpt-partie">${PARTIES.map(p=>`<option value="${p.id}" ${p.id===partieId?'selected':''}>${p.name}</option>`).join('')}</select></div>
         <div class="form-group"><label class="form-label">Date limite</label><input class="form-input" id="mpt-date" type="date"/></div>
       </div>
-      <div class="modal-actions">
-        <button class="btn btn-ghost" onclick="closeMemModal()">Annuler</button>
-        <button class="btn btn-primary" onclick="savePartieTask()">Enregistrer</button>
-      </div>`;
-
+      <div class="modal-actions"><button class="btn btn-ghost" onclick="closeMemModal()">Annuler</button><button class="btn btn-primary" onclick="savePartieTask()">Enregistrer</button></div>`;
   } else if (type === 'mem-task') {
     content.innerHTML = `<div class="modal-title">Nouvelle tâche transversale</div>
       <div class="form-group"><label class="form-label">Tâche</label><input class="form-input" id="mmt-name" placeholder="ex. Envoyer brouillon au directeur"/></div>
       <div class="form-row">
-        <div class="form-group"><label class="form-label">Partie associée</label>
-          <select class="form-input" id="mmt-partie"><option value="">— Aucune —</option>${PARTIES.map(p=>`<option value="${p.id}">${p.name}</option>`).join('')}</select>
-        </div>
+        <div class="form-group"><label class="form-label">Partie associée</label><select class="form-input" id="mmt-partie"><option value="">— Aucune —</option>${PARTIES.map(p=>`<option value="${p.id}">${p.name}</option>`).join('')}</select></div>
         <div class="form-group"><label class="form-label">Date limite</label><input class="form-input" id="mmt-date" type="date"/></div>
       </div>
-      <div class="modal-actions">
-        <button class="btn btn-ghost" onclick="closeMemModal()">Annuler</button>
-        <button class="btn btn-primary" onclick="saveMemTask()">Enregistrer</button>
-      </div>`;
+      <div class="modal-actions"><button class="btn btn-ghost" onclick="closeMemModal()">Annuler</button><button class="btn btn-primary" onclick="saveMemTask()">Enregistrer</button></div>`;
   }
-
   overlay.classList.add('open');
 }
 
-window.closeMemModal = function() {
-  document.getElementById('mem-modal-overlay').classList.remove('open');
-}
-
+window.closeMemModal = function() { document.getElementById('mem-modal-overlay').classList.remove('open'); }
 window.toggleTerrainTag = function(tag) {
   const btn = document.getElementById('mtt-' + tag);
-  if (window._terrainTags.includes(tag)) {
-    window._terrainTags = window._terrainTags.filter(t => t !== tag);
-    btn.classList.remove('active');
-  } else {
-    window._terrainTags.push(tag);
-    btn.classList.add('active');
-  }
+  if (window._terrainTags.includes(tag)) { window._terrainTags = window._terrainTags.filter(t=>t!==tag); btn.classList.remove('active'); }
+  else { window._terrainTags.push(tag); btn.classList.add('active'); }
 }
-
 window.saveLecture = async function() {
-  const titre = document.getElementById('ml-titre').value.trim();
-  if (!titre) return;
-  memState.lectures.push({ id: uid(), titre, auteurs: document.getElementById('ml-auteurs').value.trim(), statut: document.getElementById('ml-statut').value, partie: document.getElementById('ml-partie').value, notes: document.getElementById('ml-notes').value.trim(), tags:[] });
+  const titre = document.getElementById('ml-titre').value.trim(); if (!titre) return;
+  memState.lectures.push({ id:uid(), titre, auteurs:document.getElementById('ml-auteurs').value.trim(), statut:document.getElementById('ml-statut').value, partie:document.getElementById('ml-partie').value, notes:document.getElementById('ml-notes').value.trim(), tags:[] });
   await saveMemoire(); closeMemModal(); renderLectures();
 }
-
 window.saveTerrain = async function() {
-  const obs = document.getElementById('mt-obs').value.trim();
-  if (!obs) return;
-  memState.terrain.unshift({ id: uid(), date: document.getElementById('mt-date').value, context: document.getElementById('mt-ctx').value.trim(), observation: obs, verbatim: document.getElementById('mt-verb').value.trim(), interpretation: document.getElementById('mt-interp').value.trim(), questions: document.getElementById('mt-q').value.trim(), tags: [...window._terrainTags], retrospective: false });
+  const obs = document.getElementById('mt-obs').value.trim(); if (!obs) return;
+  memState.terrain.unshift({ id:uid(), date:document.getElementById('mt-date').value, context:document.getElementById('mt-ctx').value.trim(), observation:obs, verbatim:document.getElementById('mt-verb').value.trim(), interpretation:document.getElementById('mt-interp').value.trim(), questions:document.getElementById('mt-q').value.trim(), tags:[...window._terrainTags], retrospective:false });
   await saveMemoire(); closeMemModal(); renderTerrain();
 }
-
 window.savePartieTask = async function() {
-  const name = document.getElementById('mpt-name').value.trim();
-  if (!name) return;
-  memState.partieTasks.push({ id: uid(), name, partie: document.getElementById('mpt-partie').value, date: document.getElementById('mpt-date').value, done: false });
+  const name = document.getElementById('mpt-name').value.trim(); if (!name) return;
+  memState.partieTasks.push({ id:uid(), name, partie:document.getElementById('mpt-partie').value, date:document.getElementById('mpt-date').value, done:false });
   await saveMemoire(); closeMemModal(); renderParties(); renderMemOverview();
 }
-
 window.saveMemTask = async function() {
-  const name = document.getElementById('mmt-name').value.trim();
-  if (!name) return;
-  memState.memTasks.push({ id: uid(), name, partie: document.getElementById('mmt-partie').value, date: document.getElementById('mmt-date').value, done: false });
+  const name = document.getElementById('mmt-name').value.trim(); if (!name) return;
+  memState.memTasks.push({ id:uid(), name, partie:document.getElementById('mmt-partie').value, date:document.getElementById('mmt-date').value, done:false });
   await saveMemoire(); closeMemModal(); renderMemTasks();
 }
 
-loadMemoire();
+// ── EDIT MEMOIRE INFO ──────────────────────────
+window.editMemInfo = function() {
+  const info = memState.info || DEFAULT_MEM_INFO;
+  const content = document.getElementById('mem-modal-content');
+  content.innerHTML = `<div class="modal-title">Modifier les infos</div>
+    <div class="form-group"><label class="form-label">Problématique</label><textarea class="form-textarea" id="mi-prob" rows="4">${info.problematique||''}</textarea></div>
+    <div class="form-group"><label class="form-label">Directeur</label><input class="form-input" id="mi-dir" value="${(info.directeur||'').replace(/"/g,'&quot;')}"/></div>
+    <div class="form-group"><label class="form-label">Terrain</label><input class="form-input" id="mi-terrain" value="${(info.terrain||'').replace(/"/g,'&quot;')}"/></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Date de rendu</label><input class="form-input" id="mi-rendu" value="${(info.rendu||'').replace(/"/g,'&quot;')}"/></div>
+      <div class="form-group"><label class="form-label">Langue</label><input class="form-input" id="mi-langue" value="${(info.langue||'').replace(/"/g,'&quot;')}"/></div>
+    </div>
+    <div class="modal-actions"><button class="btn btn-ghost" onclick="closeMemModal()">Annuler</button><button class="btn btn-primary" onclick="saveMemInfo()">Enregistrer</button></div>`;
+  document.getElementById('mem-modal-overlay').classList.add('open');
+}
+window.saveMemInfo = async function() {
+  memState.info = { problematique:document.getElementById('mi-prob').value.trim(), directeur:document.getElementById('mi-dir').value.trim(), terrain:document.getElementById('mi-terrain').value.trim(), rendu:document.getElementById('mi-rendu').value.trim(), langue:document.getElementById('mi-langue').value.trim() };
+  await saveMemoire(); closeMemModal(); renderMemOverview(); toast('Infos mises à jour !');
+}
 
-// ── EDIT MEMOIRE TASKS ────────────────────────
+// ── EDIT MEMOIRE TASKS ──────────────────────────
 window.editMemTask = function(id) {
-  const t = memState.memTasks.find(x => x.id === id);
-  if (!t) return;
-  const overlay = document.getElementById('mem-modal-overlay');
+  const t = memState.memTasks.find(x=>x.id===id); if (!t) return;
   const content = document.getElementById('mem-modal-content');
   content.innerHTML = `<div class="modal-title">Modifier la tâche</div>
     <div class="form-group"><label class="form-label">Tâche</label><input class="form-input" id="mmt-name" value="${t.name}"/></div>
     <div class="form-row">
-      <div class="form-group"><label class="form-label">Partie associée</label>
-        <select class="form-input" id="mmt-partie"><option value="">— Aucune —</option>${PARTIES.map(p=>`<option value="${p.id}" ${t.partie===p.id?'selected':''}>${p.name}</option>`).join('')}</select>
-      </div>
+      <div class="form-group"><label class="form-label">Partie associée</label><select class="form-input" id="mmt-partie"><option value="">— Aucune —</option>${PARTIES.map(p=>`<option value="${p.id}" ${t.partie===p.id?'selected':''}>${p.name}</option>`).join('')}</select></div>
       <div class="form-group"><label class="form-label">Date limite</label><input class="form-input" id="mmt-date" type="date" value="${t.date||''}"/></div>
     </div>
-    <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="closeMemModal()">Annuler</button>
-      <button class="btn btn-primary" onclick="updateMemTask('${id}')">Enregistrer</button>
-    </div>`;
-  overlay.classList.add('open');
+    <div class="modal-actions"><button class="btn btn-ghost" onclick="closeMemModal()">Annuler</button><button class="btn btn-primary" onclick="updateMemTask('${id}')">Enregistrer</button></div>`;
+  document.getElementById('mem-modal-overlay').classList.add('open');
 }
-
 window.updateMemTask = async function(id) {
-  const t = memState.memTasks.find(x => x.id === id);
-  if (!t) return;
+  const t = memState.memTasks.find(x=>x.id===id); if (!t) return;
   t.name = document.getElementById('mmt-name').value.trim() || t.name;
   t.partie = document.getElementById('mmt-partie').value;
   t.date = document.getElementById('mmt-date').value;
   await saveMemoire(); closeMemModal(); renderMemTasks();
 }
 
-// ── EDIT LECTURES ─────────────────────────────
+// ── EDIT LECTURES ──────────────────────────────
 window.editLecture = function(id) {
-  const l = memState.lectures.find(x => x.id === id);
-  if (!l) return;
-  const overlay = document.getElementById('mem-modal-overlay');
+  const l = memState.lectures.find(x=>x.id===id); if (!l) return;
   const content = document.getElementById('mem-modal-content');
   content.innerHTML = `<div class="modal-title">Modifier la référence</div>
     <div class="form-group"><label class="form-label">Titre</label><input class="form-input" id="ml-titre" value="${l.titre}"/></div>
     <div class="form-row">
       <div class="form-group"><label class="form-label">Auteur(s)</label><input class="form-input" id="ml-auteurs" value="${l.auteurs||''}"/></div>
-      <div class="form-group"><label class="form-label">Statut</label>
-        <select class="form-input" id="ml-statut">
-          <option value="à-lire" ${l.statut==='à-lire'?'selected':''}>À lire</option>
-          <option value="en-cours" ${l.statut==='en-cours'?'selected':''}>En cours</option>
-          <option value="lu" ${l.statut==='lu'?'selected':''}>Lu</option>
-        </select>
-      </div>
+      <div class="form-group"><label class="form-label">Statut</label><select class="form-input" id="ml-statut"><option value="à-lire" ${l.statut==='à-lire'?'selected':''}>À lire</option><option value="en-cours" ${l.statut==='en-cours'?'selected':''}>En cours</option><option value="lu" ${l.statut==='lu'?'selected':''}>Lu</option></select></div>
     </div>
-    <div class="form-group"><label class="form-label">Partie associée</label>
-      <select class="form-input" id="ml-partie"><option value="">— Aucune —</option>${PARTIES.map(p=>`<option value="${p.id}" ${l.partie===p.id?'selected':''}>${p.name}</option>`).join('')}</select>
-    </div>
+    <div class="form-group"><label class="form-label">Partie associée</label><select class="form-input" id="ml-partie"><option value="">— Aucune —</option>${PARTIES.map(p=>`<option value="${p.id}" ${l.partie===p.id?'selected':''}>${p.name}</option>`).join('')}</select></div>
     <div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="ml-notes">${l.notes||''}</textarea></div>
-    <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="closeMemModal()">Annuler</button>
-      <button class="btn btn-primary" onclick="updateLecture('${id}')">Enregistrer</button>
-    </div>`;
-  overlay.classList.add('open');
+    <div class="modal-actions"><button class="btn btn-ghost" onclick="closeMemModal()">Annuler</button><button class="btn btn-primary" onclick="updateLecture('${id}')">Enregistrer</button></div>`;
+  document.getElementById('mem-modal-overlay').classList.add('open');
 }
-
 window.updateLecture = async function(id) {
-  const l = memState.lectures.find(x => x.id === id);
-  if (!l) return;
+  const l = memState.lectures.find(x=>x.id===id); if (!l) return;
   l.titre = document.getElementById('ml-titre').value.trim() || l.titre;
   l.auteurs = document.getElementById('ml-auteurs').value.trim();
   l.statut = document.getElementById('ml-statut').value;
@@ -1755,11 +941,9 @@ window.updateLecture = async function(id) {
 
 // ── EDIT TERRAIN ──────────────────────────────
 window.editTerrain = function(id) {
-  const e = memState.terrain.find(x => x.id === id);
-  if (!e) return;
+  const e = memState.terrain.find(x=>x.id===id); if (!e) return;
   const TAGS = ['visibilité','invisibilité','coordination','outils','auto-contrôle','culture','goffman','hafermalz','merleau-ponty'];
   window._terrainTags = [...(e.tags||[])];
-  const overlay = document.getElementById('mem-modal-overlay');
   const content = document.getElementById('mem-modal-content');
   content.innerHTML = `<div class="modal-title">Modifier l'observation</div>
     <div class="form-row">
@@ -1775,51 +959,22 @@ window.editTerrain = function(id) {
         ${TAGS.map(t=>`<button class="filter-btn ${(e.tags||[]).includes(t)?'active':''}" id="mtt-${t}" onclick="toggleTerrainTag('${t}')">${t}</button>`).join('')}
       </div>
     </div>
-    <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="closeMemModal()">Annuler</button>
-      <button class="btn btn-primary" onclick="updateTerrain('${id}')">Enregistrer</button>
-    </div>`;
-  overlay.classList.add('open');
+    <div class="modal-actions"><button class="btn btn-ghost" onclick="closeMemModal()">Annuler</button><button class="btn btn-primary" onclick="updateTerrain('${id}')">Enregistrer</button></div>`;
+  document.getElementById('mem-modal-overlay').classList.add('open');
 }
-
 window.updateTerrain = async function(id) {
-  const e = memState.terrain.find(x => x.id === id);
-  if (!e) return;
+  const e = memState.terrain.find(x=>x.id===id); if (!e) return;
   e.date = document.getElementById('mt-date').value;
   e.context = document.getElementById('mt-ctx').value.trim();
   e.observation = document.getElementById('mt-obs').value.trim();
   e.verbatim = document.getElementById('mt-verb').value.trim();
-
-// ── EDIT MEMOIR INFO ──────────────────────────
-window.editMemInfo = function() {
-  const info = memState.info || DEFAULT_MEM_INFO;
-  const overlay = document.getElementById('mem-modal-overlay');
-  const content = document.getElementById('mem-modal-content');
-  content.innerHTML = `<div class="modal-title">Modifier les infos</div>
-    <div class="form-group"><label class="form-label">Problématique</label><textarea class="form-textarea" id="mi-prob" rows="4">${info.problematique||''}</textarea></div>
-    <div class="form-group"><label class="form-label">Directeur</label><input class="form-input" id="mi-dir" value="${(info.directeur||'').replace(/"/g,'&quot;')}"/></div>
-    <div class="form-group"><label class="form-label">Terrain</label><input class="form-input" id="mi-terrain" value="${(info.terrain||'').replace(/"/g,'&quot;')}"/></div>
-    <div class="form-row">
-      <div class="form-group"><label class="form-label">Date de rendu</label><input class="form-input" id="mi-rendu" value="${(info.rendu||'').replace(/"/g,'&quot;')}"/></div>
-      <div class="form-group"><label class="form-label">Langue</label><input class="form-input" id="mi-langue" value="${(info.langue||'').replace(/"/g,'&quot;')}"/></div>
-    </div>
-    <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="closeMemModal()">Annuler</button>
-      <button class="btn btn-primary" onclick="saveMemInfo()">Enregistrer</button>
-    </div>`;
-  overlay.classList.add('open');
+  e.interpretation = document.getElementById('mt-interp').value.trim();
+  e.questions = document.getElementById('mt-q').value.trim();
+  e.tags = [...window._terrainTags];
+  await saveMemoire(); closeMemModal(); renderTerrain();
 }
 
-window.saveMemInfo = async function() {
-  memState.info = {
-    problematique: document.getElementById('mi-prob').value.trim(),
-    directeur: document.getElementById('mi-dir').value.trim(),
-    terrain: document.getElementById('mi-terrain').value.trim(),
-    rendu: document.getElementById('mi-rendu').value.trim(),
-    langue: document.getElementById('mi-langue').value.trim(),
-  };
-  await saveMemoire();
-  closeMemModal();
-  renderMemOverview();
-  toast('Infos mises à jour !');
-}
+loadMemoire();
+</script>
+</body>
+</html>
