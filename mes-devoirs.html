@@ -485,21 +485,7 @@
   <!-- OVERVIEW -->
   <div class="mem-section active" id="mem-overview">
     <div class="mem-stats" id="mem-stats-el"></div>
-    <div class="mem-info-grid">
-      <div class="mem-info-card">
-        <div class="mem-info-label">Problématique</div>
-        <div class="mem-info-value" style="font-style:italic">How is activity made visible and coordinated in distributed digital projects, and how do these visibility mechanisms redefine forms of self-control and individual engagement?</div>
-      </div>
-      <div class="mem-info-card">
-        <div class="mem-info-label">Infos clés</div>
-        <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px">
-          <div><span class="mem-info-label" style="display:inline">Directeur</span> <span class="mem-info-value" style="display:inline">F.-X. de Vaujany</span></div>
-          <div><span class="mem-info-label" style="display:inline">Terrain</span> <span class="mem-info-value" style="display:inline">Sanofi — équipes FR/IN/US</span></div>
-          <div><span class="mem-info-label" style="display:inline">Rendu</span> <span class="mem-info-value" style="display:inline">Fin août 2025</span></div>
-          <div><span class="mem-info-label" style="display:inline">Langue</span> <span class="mem-info-value" style="display:inline">Anglais</span></div>
-        </div>
-      </div>
-    </div>
+    <div id="mem-overview-cards"></div>
     <div class="mem-info-card">
       <div class="mem-info-label" style="margin-bottom:12px">Avancement des 3 parties</div>
       <div id="overview-parties"></div>
@@ -1316,7 +1302,14 @@ const DEFAULT_MEM_TASKS = [
   { id:'mt5', name:'Envoyer version finale au directeur (buffer 1 sem)', done:false, date:'2025-08-22', partie:'terrain' },
 ];
 
-let memState = { lectures:[], terrain:[], partieTasks:[], memTasks:[] };
+const DEFAULT_MEM_INFO = {
+  problematique: "How is activity made visible and coordinated in distributed digital projects, and how do these visibility mechanisms redefine forms of self-control and individual engagement?",
+  directeur: "F.-X. de Vaujany",
+  terrain: "Sanofi — équipes FR/IN/US",
+  rendu: "Fin août 2025",
+  langue: "Anglais"
+};
+let memState = { lectures:[], terrain:[], partieTasks:[], memTasks:[], info: {...DEFAULT_MEM_INFO} };
 let lecFilter = 'all';
 
 async function loadMemoire() {
@@ -1330,15 +1323,17 @@ async function loadMemoire() {
           memState.terrain = d.terrain || DEFAULT_TERRAIN;
           memState.partieTasks = d.partieTasks || DEFAULT_PARTIE_TASKS;
           memState.memTasks = d.memTasks || DEFAULT_MEM_TASKS;
+          memState.info = d.info || {...DEFAULT_MEM_INFO};
         } else {
-          memState = { lectures: DEFAULT_LECTURES, terrain: DEFAULT_TERRAIN, partieTasks: DEFAULT_PARTIE_TASKS, memTasks: DEFAULT_MEM_TASKS };
+          memState = { lectures: DEFAULT_LECTURES, terrain: DEFAULT_TERRAIN, partieTasks: DEFAULT_PARTIE_TASKS, memTasks: DEFAULT_MEM_TASKS, info: {...DEFAULT_MEM_INFO} };
           saveMemoire();
         }
         renderMemoire();
       });
     } else {
       const saved = localStorage.getItem('studyspace_memoire');
-      memState = saved ? JSON.parse(saved) : { lectures: DEFAULT_LECTURES, terrain: DEFAULT_TERRAIN, partieTasks: DEFAULT_PARTIE_TASKS, memTasks: DEFAULT_MEM_TASKS };
+      memState = saved ? JSON.parse(saved) : { lectures: DEFAULT_LECTURES, terrain: DEFAULT_TERRAIN, partieTasks: DEFAULT_PARTIE_TASKS, memTasks: DEFAULT_MEM_TASKS, info: {...DEFAULT_MEM_INFO} };
+      if (!memState.info) memState.info = {...DEFAULT_MEM_INFO};
       renderMemoire();
     }
   } catch(e) {
@@ -1371,6 +1366,29 @@ function renderMemoire() {
 }
 
 function renderMemOverview() {
+  const info = memState.info || DEFAULT_MEM_INFO;
+  document.getElementById('mem-overview-cards').innerHTML = `
+    <div class="mem-info-grid">
+      <div class="mem-info-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <div class="mem-info-label">Problématique</div>
+          <button style="background:none;border:none;cursor:pointer;color:#bbb;font-size:13px" onclick="editMemInfo()">✎ Modifier</button>
+        </div>
+        <div class="mem-info-value" style="font-style:italic">${info.problematique||'—'}</div>
+      </div>
+      <div class="mem-info-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <div class="mem-info-label">Infos clés</div>
+          <button style="background:none;border:none;cursor:pointer;color:#bbb;font-size:13px" onclick="editMemInfo()">✎ Modifier</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div><span class="mem-info-label" style="display:inline">Directeur</span> <span class="mem-info-value" style="display:inline">${info.directeur||'—'}</span></div>
+          <div><span class="mem-info-label" style="display:inline">Terrain</span> <span class="mem-info-value" style="display:inline">${info.terrain||'—'}</span></div>
+          <div><span class="mem-info-label" style="display:inline">Rendu</span> <span class="mem-info-value" style="display:inline">${info.rendu||'—'}</span></div>
+          <div><span class="mem-info-label" style="display:inline">Langue</span> <span class="mem-info-value" style="display:inline">${info.langue||'—'}</span></div>
+        </div>
+      </div>
+    </div>`;
   const lu = memState.lectures.filter(l => l.statut === 'lu').length;
   const total = memState.lectures.length;
   const obs = memState.terrain.length;
@@ -1771,6 +1789,40 @@ window.updateTerrain = async function(id) {
   e.context = document.getElementById('mt-ctx').value.trim();
   e.observation = document.getElementById('mt-obs').value.trim();
   e.verbatim = document.getElementById('mt-verb').value.trim();
+
+// ── EDIT MEMOIR INFO ──────────────────────────
+window.editMemInfo = function() {
+  const info = memState.info || DEFAULT_MEM_INFO;
+  const overlay = document.getElementById('mem-modal-overlay');
+  const content = document.getElementById('mem-modal-content');
+  content.innerHTML = `<div class="modal-title">Modifier les infos</div>
+    <div class="form-group"><label class="form-label">Problématique</label><textarea class="form-textarea" id="mi-prob" rows="4">${info.problematique||''}</textarea></div>
+    <div class="form-group"><label class="form-label">Directeur</label><input class="form-input" id="mi-dir" value="${(info.directeur||'').replace(/"/g,'&quot;')}"/></div>
+    <div class="form-group"><label class="form-label">Terrain</label><input class="form-input" id="mi-terrain" value="${(info.terrain||'').replace(/"/g,'&quot;')}"/></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Date de rendu</label><input class="form-input" id="mi-rendu" value="${(info.rendu||'').replace(/"/g,'&quot;')}"/></div>
+      <div class="form-group"><label class="form-label">Langue</label><input class="form-input" id="mi-langue" value="${(info.langue||'').replace(/"/g,'&quot;')}"/></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeMemModal()">Annuler</button>
+      <button class="btn btn-primary" onclick="saveMemInfo()">Enregistrer</button>
+    </div>`;
+  overlay.classList.add('open');
+}
+
+window.saveMemInfo = async function() {
+  memState.info = {
+    problematique: document.getElementById('mi-prob').value.trim(),
+    directeur: document.getElementById('mi-dir').value.trim(),
+    terrain: document.getElementById('mi-terrain').value.trim(),
+    rendu: document.getElementById('mi-rendu').value.trim(),
+    langue: document.getElementById('mi-langue').value.trim(),
+  };
+  await saveMemoire();
+  closeMemModal();
+  renderMemOverview();
+  toast('Infos mises à jour !');
+}
   e.interpretation = document.getElementById('mt-interp').value.trim();
   e.questions = document.getElementById('mt-q').value.trim();
   e.tags = [...window._terrainTags];
