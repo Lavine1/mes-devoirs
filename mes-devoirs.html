@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mes devoirs</title>
 <link rel="manifest" href="#" />
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cellipse cx='32' cy='38' rx='18' ry='14' fill='%23FFD93D'/%3E%3Ccircle cx='32' cy='22' r='11' fill='%23FFD93D'/%3E%3Ccircle cx='36' cy='19' r='3.5' fill='white'/%3E%3Ccircle cx='37' cy='19' r='2' fill='%23222'/%3E%3Cpath d='M40 23 Q46 21 45 26 Q42 25 40 25Z' fill='%23FF8C00'/%3E%3Cellipse cx='24' cy='44' rx='5' ry='3' fill='%23FF8C00'/%3E%3Cellipse cx='40' cy='44' rx='5' ry='3' fill='%23FF8C00'/%3E%3C%2Fsvg%3E" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cellipse cx='32' cy='38' rx='18' ry='14' fill='%23FFD93D'/%3E%3Ccircle cx='32' cy='22' r='11' fill='%23FFD93D'/%3E%3Ccircle cx='36' cy='19' r='3.5' fill='white'/%3E%3Ccircle cx='37' cy='19' r='2' fill='%23222'/%3E%3Cpath d='M40 23 Q46 21 45 26 Q42 25 40 25Z' fill='%23FF8C00'/%3E%3Cellipse cx='24' cy='44' rx='5' ry='3' fill='%23FF8C00'/%3E%3Cellipse cx='40' cy='44' rx='5' ry='3' fill='%23FF8C00'/%3E%3C/svg%3E" />
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -413,6 +413,7 @@
   <div class="nav-tabs">
     <button class="nav-tab active" onclick="showView('matieres')">Matières</button>
     <button class="nav-tab" onclick="showView('toutes')">Toutes les tâches</button>
+    <button class="nav-tab" onclick="showView('memoire')">Mémoire</button>
   </div>
 </nav>
 
@@ -464,6 +465,170 @@
     <div class="tasks-table" id="tasks-table"></div>
   </div>
 </main>
+
+
+<!-- STYLES MEMOIRE -->
+<style>
+.mem-tabs { display:flex; gap:6px; margin-bottom:24px; border-bottom:1px solid var(--border); padding-bottom:0; }
+.mem-tab { padding:8px 16px; font-size:13px; cursor:pointer; border:none; background:transparent; color:var(--text-muted); font-family:'DM Sans',sans-serif; border-bottom:2px solid transparent; margin-bottom:-1px; transition:all .15s; }
+.mem-tab.active { color:var(--text); border-bottom-color:var(--text); font-weight:500; }
+.mem-section { display:none; }
+.mem-section.active { display:block; }
+
+/* VUE D'ENSEMBLE */
+.mem-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:28px; }
+@media(max-width:600px){ .mem-stats{grid-template-columns:1fr 1fr;} }
+.mem-stat { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px; text-align:center; }
+.mem-stat-n { font-family:'DM Serif Display',serif; font-size:26px; color:var(--text); }
+.mem-stat-l { font-size:11px; color:var(--text-muted); margin-top:3px; }
+
+.mem-info-card { background:var(--surface); border-radius:var(--radius); border:1px solid var(--border); padding:22px; margin-bottom:16px; }
+.mem-info-label { font-size:11px; font-weight:500; color:var(--text-muted); text-transform:uppercase; letter-spacing:.06em; margin-bottom:5px; }
+.mem-info-value { font-size:14px; color:var(--text); line-height:1.6; }
+.mem-info-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px; }
+@media(max-width:600px){ .mem-info-grid{grid-template-columns:1fr;} }
+
+/* PARTIES */
+.partie-card { background:var(--surface); border-radius:var(--radius); border:1px solid var(--border); padding:20px; margin-bottom:12px; }
+.partie-header { display:flex; align-items:center; gap:12px; margin-bottom:10px; }
+.partie-num { font-family:'DM Serif Display',serif; font-size:22px; color:var(--text-muted); min-width:28px; }
+.partie-name { font-size:15px; font-weight:500; flex:1; }
+.partie-status { font-size:11px; padding:3px 10px; border-radius:20px; font-weight:500; white-space:nowrap; }
+.partie-status.todo { background:#F1EFE8; color:#666; }
+.partie-status.wip { background:#FFF0D6; color:#8A5A00; }
+.partie-status.done { background:#D6EEE4; color:#2A6B4F; }
+.partie-progress { height:4px; background:var(--bg); border-radius:2px; overflow:hidden; margin-bottom:10px; }
+.partie-progress-fill { height:100%; border-radius:2px; transition:width .3s; }
+.partie-desc { font-size:12px; color:var(--text-muted); line-height:1.6; margin-bottom:10px; }
+.partie-tasks-mini { display:flex; flex-direction:column; gap:5px; }
+.mini-task { display:flex; align-items:center; gap:8px; font-size:12px; color:var(--text-muted); }
+.mini-check { width:14px; height:14px; border-radius:50%; border:1.5px solid #ccc; flex-shrink:0; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all .15s; }
+.mini-check.done { background:var(--text); border-color:var(--text); }
+.mini-check.done::after { content:'✓'; color:#fff; font-size:8px; }
+.mini-task-name { flex:1; }
+.mini-task-name.done { text-decoration:line-through; opacity:.5; }
+
+/* LECTURES */
+.lecture-filters { display:flex; gap:6px; margin-bottom:16px; flex-wrap:wrap; }
+.lec-card { background:var(--surface); border-radius:var(--radius-sm); border:1px solid var(--border); padding:16px; margin-bottom:8px; display:flex; gap:14px; align-items:flex-start; }
+.lec-status-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; margin-top:4px; }
+.lec-body { flex:1; min-width:0; }
+.lec-title { font-size:14px; font-weight:500; color:var(--text); margin-bottom:2px; }
+.lec-authors { font-size:12px; color:var(--text-muted); margin-bottom:6px; }
+.lec-note { font-size:12px; color:var(--text-muted); font-style:italic; line-height:1.5; }
+.lec-tags { display:flex; gap:5px; flex-wrap:wrap; margin-top:8px; }
+.lec-tag { font-size:11px; padding:2px 8px; border-radius:20px; }
+.lec-actions { display:flex; gap:6px; align-items:center; }
+.lec-status-btn { font-size:11px; padding:4px 10px; border-radius:20px; border:1px solid var(--border); background:transparent; cursor:pointer; color:var(--text-muted); font-family:'DM Sans',sans-serif; transition:all .15s; }
+.lec-status-btn:hover { background:var(--bg); }
+
+/* TERRAIN */
+.terrain-entry { background:var(--surface); border:1px solid var(--border); border-left:3px solid #9B72D4; border-radius:var(--radius-sm); padding:18px; margin-bottom:10px; }
+.terrain-entry-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px; }
+.terrain-date { font-size:14px; font-weight:500; color:var(--text); }
+.terrain-ctx { font-size:12px; color:var(--text-muted); margin-top:2px; }
+.terrain-section-label { font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:.06em; color:var(--text-muted); margin:10px 0 3px; }
+.terrain-text { font-size:13px; color:var(--text); line-height:1.65; }
+.terrain-verbatim { background:var(--bg); border-left:2px solid #9B72D4; padding:10px 14px; font-style:italic; font-size:12px; color:var(--text-muted); line-height:1.55; margin:8px 0; border-radius:0 6px 6px 0; }
+.terrain-tags { display:flex; gap:5px; flex-wrap:wrap; margin-top:10px; }
+.terrain-tag { font-size:11px; padding:2px 8px; border-radius:20px; }
+
+/* TACHES MEMOIRE */
+.mem-task-row { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px 16px; display:flex; align-items:center; gap:12px; margin-bottom:6px; }
+.mem-task-row.done { opacity:.4; }
+.mem-task-row.done .mem-task-name { text-decoration:line-through; }
+.mem-task-name { flex:1; font-size:14px; }
+.mem-task-partie { font-size:11px; padding:2px 8px; border-radius:20px; background:var(--bg); color:var(--text-muted); white-space:nowrap; }
+.mem-task-date { font-size:12px; color:var(--text-muted); white-space:nowrap; min-width:80px; text-align:right; }
+.mem-task-date.urgent { color:#C0392B; font-weight:500; }
+.mem-task-date.soon { color:#E67E22; font-weight:500; }
+
+.form-textarea { width:100%; padding:9px 12px; border:1px solid var(--border); border-radius:var(--radius-sm); font-family:'DM Sans',sans-serif; font-size:14px; background:var(--bg); color:var(--text); resize:vertical; min-height:80px; transition:border-color .15s; }
+.form-textarea:focus { outline:none; border-color:#aaa; }
+</style>
+
+<!-- VUE MEMOIRE -->
+<div class="view" id="view-memoire">
+  <div class="page-header">
+    <div>
+      <div class="page-title">Mémoire</div>
+      <div class="page-sub">Master 128 · MBC · Dauphine — dir. F.-X. de Vaujany</div>
+    </div>
+  </div>
+
+  <div class="mem-tabs">
+    <button class="mem-tab active" onclick="showMemTab('overview',this)">Vue d'ensemble</button>
+    <button class="mem-tab" onclick="showMemTab('parties',this)">Les 3 parties</button>
+    <button class="mem-tab" onclick="showMemTab('lectures',this)">Lectures</button>
+    <button class="mem-tab" onclick="showMemTab('terrain',this)">Terrain</button>
+    <button class="mem-tab" onclick="showMemTab('taches',this)">Tâches</button>
+  </div>
+
+  <!-- OVERVIEW -->
+  <div class="mem-section active" id="mem-overview">
+    <div class="mem-stats" id="mem-stats-el"></div>
+    <div class="mem-info-grid">
+      <div class="mem-info-card">
+        <div class="mem-info-label">Problématique</div>
+        <div class="mem-info-value" style="font-style:italic">How is activity made visible and coordinated in distributed digital projects, and how do these visibility mechanisms redefine forms of self-control and individual engagement?</div>
+      </div>
+      <div class="mem-info-card">
+        <div class="mem-info-label">Infos clés</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px">
+          <div><span class="mem-info-label" style="display:inline">Directeur</span> <span class="mem-info-value" style="display:inline">F.-X. de Vaujany</span></div>
+          <div><span class="mem-info-label" style="display:inline">Terrain</span> <span class="mem-info-value" style="display:inline">Sanofi — équipes FR/IN/US</span></div>
+          <div><span class="mem-info-label" style="display:inline">Rendu</span> <span class="mem-info-value" style="display:inline">Fin août 2025</span></div>
+          <div><span class="mem-info-label" style="display:inline">Langue</span> <span class="mem-info-value" style="display:inline">Anglais</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="mem-info-card">
+      <div class="mem-info-label" style="margin-bottom:12px">Avancement des 3 parties</div>
+      <div id="overview-parties"></div>
+    </div>
+  </div>
+
+  <!-- PARTIES -->
+  <div class="mem-section" id="mem-parties">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+      <div style="font-size:13px;color:var(--text-muted)">Clique sur une tâche pour la cocher</div>
+      <button class="btn btn-primary" onclick="openMemModal('partie-task')">+ Tâche</button>
+    </div>
+    <div id="parties-list"></div>
+  </div>
+
+  <!-- LECTURES -->
+  <div class="mem-section" id="mem-lectures">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <div class="lecture-filters" id="lec-filters"></div>
+      <button class="btn btn-primary" onclick="openMemModal('lecture')">+ Référence</button>
+    </div>
+    <div id="lectures-list"></div>
+  </div>
+
+  <!-- TERRAIN -->
+  <div class="mem-section" id="mem-terrain">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+      <div style="font-size:13px;color:var(--text-muted)" id="terrain-count"></div>
+      <button class="btn btn-primary" onclick="openMemModal('terrain')">+ Observation</button>
+    </div>
+    <div id="terrain-list"></div>
+  </div>
+
+  <!-- TACHES -->
+  <div class="mem-section" id="mem-taches">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+      <div style="font-size:13px;color:var(--text-muted)" id="mem-tasks-count"></div>
+      <button class="btn btn-primary" onclick="openMemModal('mem-task')">+ Tâche</button>
+    </div>
+    <div id="mem-tasks-list"></div>
+  </div>
+</div>
+
+<!-- MODAL MEMOIRE -->
+<div class="modal-overlay" id="mem-modal-overlay" onclick="if(event.target===this)closeMemModal()">
+  <div class="modal" id="mem-modal-content"></div>
+</div>
 
 <!-- MODALS -->
 <div class="modal-overlay" id="modal-overlay" onclick="closeModalOutside(event)">
@@ -648,7 +813,7 @@ function renderDetail(id) {
         <div class="task-check ${t.done?'checked':''}" onclick="toggleTask('${tid}')"></div>
         <div class="dt-name">${t.name}${t.type==='groupe'?' 👥':''}</div>
         <div class="dt-date">${t.date?formatDate(t.date):''}</div>
-        <button class="dt-del" onclick="deleteTask('${tid}')">×</button>
+        <button class="dt-del" onclick="editTask('${tid}')" style="margin-right:2px">✎</button><button class="dt-del" onclick="deleteTask('${tid}')">×</button>
       </div>`).join('');
   }
 }
@@ -705,7 +870,7 @@ function renderToutes() {
       ${m?`<span class="task-matiere-label" style="background:${c.bg};color:${c.text}">${m.name}</span>`:''}
       <span class="task-type-badge ${t.type==='groupe'?'groupe':''}">${t.type==='groupe'?'Groupe':'Individuel'}</span>
       <div class="task-deadline ${dlClass}">${t.date ? formatDeadline(t.date, dl) : '—'}</div>
-      <button class="task-del" onclick="deleteTask('${tid}')">×</button>
+      <button class="task-del" onclick="editTask('${tid}')" style="margin-right:2px;font-size:14px">✎</button><button class="task-del" onclick="deleteTask('${tid}')">×</button>
     </div>`;
   }).join('');
 
@@ -828,7 +993,7 @@ window.openModal = function(type, id) {
   } else if (type === 'task-detail' || type === 'task-global') {
     const matieres = Object.entries(state.matieres);
     content.innerHTML = `
-      <div class="modal-title">Nouvelle tâche</div>
+      <div class="modal-title" id="task-modal-title">Nouvelle tâche</div>
       <div class="form-group">
         <label class="form-label">Intitulé</label>
         <input class="form-input" id="t-name" placeholder="ex: Lire chapitre 4, Rendre DM..." />
@@ -866,7 +1031,7 @@ window.openModal = function(type, id) {
       </div>
       <div class="modal-actions">
         <button class="btn btn-ghost" onclick="closeModal()">Annuler</button>
-        <button class="btn btn-primary" onclick="saveTask()">Enregistrer</button>
+        <button class="btn btn-primary" id="task-save-btn" onclick="saveTask()">Enregistrer</button>
       </div>`;
   }
 
@@ -948,21 +1113,85 @@ window.saveEval = async function() {
   toast('Évaluation ajoutée !');
 }
 
+let editingTaskId = null;
+
+window.editTask = function(id) {
+  const t = state.tasks[id];
+  if (!t) return;
+  const matieres = Object.entries(state.matieres);
+  editingTaskId = id;
+  const overlay = document.getElementById('modal-overlay');
+  const content = document.getElementById('modal-content');
+  content.innerHTML = `
+      <div class="modal-title">Modifier la tâche</div>
+      <div class="form-group">
+        <label class="form-label">Intitulé</label>
+        <input class="form-input" id="t-name" value="${t.name}" />
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Matière</label>
+          <select class="form-input" id="t-matiere">
+            <option value="">— Aucune —</option>
+            ${matieres.map(([mid, m]) => `<option value="${mid}" ${t.matiereId===mid?'selected':''}>${m.name}</option>`).join('')}
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Date limite</label>
+          <input class="form-input" id="t-date" type="date" value="${t.date||''}" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Type</label>
+          <select class="form-input" id="t-type">
+            <option value="perso" ${t.type==='perso'?'selected':''}>Individuel</option>
+            <option value="groupe" ${t.type==='groupe'?'selected':''}>Groupe</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Catégorie</label>
+          <select class="form-input" id="t-cat">
+            <option value="rendu" ${t.cat==='rendu'?'selected':''}>Rendu</option>
+            <option value="revision" ${t.cat==='revision'?'selected':''}>Révisions</option>
+            <option value="lecture" ${t.cat==='lecture'?'selected':''}>Lecture</option>
+            <option value="autre" ${t.cat==='autre'?'selected':''}>Autre</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="closeModal()">Annuler</button>
+        <button class="btn btn-primary" onclick="saveTask()">Enregistrer</button>
+      </div>`;
+  overlay.classList.add('open');
+}
+
 window.saveTask = async function() {
   const name = document.getElementById('t-name').value.trim();
   if (!name) return;
-  const id = uid();
-  state.tasks[id] = {
-    name,
-    matiereId: document.getElementById('t-matiere').value || null,
-    date: document.getElementById('t-date').value,
-    type: document.getElementById('t-type').value,
-    cat: document.getElementById('t-cat').value,
-    done: false
-  };
-  await saveDB();
-  closeModal();
-  toast('Tâche ajoutée !');
+  if (editingTaskId) {
+    state.tasks[editingTaskId] = {
+      ...state.tasks[editingTaskId],
+      name,
+      matiereId: document.getElementById('t-matiere').value || null,
+      date: document.getElementById('t-date').value,
+      type: document.getElementById('t-type').value,
+      cat: document.getElementById('t-cat').value,
+    };
+    editingTaskId = null;
+    await saveDB(); closeModal(); toast('Tâche modifiée !');
+  } else {
+    const id = uid();
+    state.tasks[id] = {
+      name,
+      matiereId: document.getElementById('t-matiere').value || null,
+      date: document.getElementById('t-date').value,
+      type: document.getElementById('t-type').value,
+      cat: document.getElementById('t-cat').value,
+      done: false
+    };
+    await saveDB(); closeModal(); toast('Tâche ajoutée !');
+  }
 }
 
 window.deleteTask = async function(id) {
@@ -1025,9 +1254,527 @@ window.showView = function(name) {
   document.getElementById('view-' + name).classList.add('active');
   if (name === 'matieres') document.querySelector('.nav-tab:nth-child(1)').classList.add('active');
   else if (name === 'toutes') document.querySelector('.nav-tab:nth-child(2)').classList.add('active');
+  else if (name === 'memoire') document.querySelector('.nav-tab:nth-child(3)').classList.add('active');
 }
 
 renderAll();
+
+// ── NAV UPDATE ─────────────────────────────────
+const _origShowView = window.showView;
+window.showView = function(name) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('view-' + name).classList.add('active');
+  if (name === 'matieres') document.querySelector('.nav-tab:nth-child(1)').classList.add('active');
+  else if (name === 'toutes') document.querySelector('.nav-tab:nth-child(2)').classList.add('active');
+  else if (name === 'memoire') document.querySelector('.nav-tab:nth-child(3)').classList.add('active');
+  else if (name === 'memoire') { document.querySelector('.nav-tab:nth-child(3)').classList.add('active'); renderMemoire(); }
+}
+
+// ── MEMOIRE STATE ──────────────────────────────
+const PARTIES = [
+  { id:'rdl', name:'Revue de littérature', color:'#9B72D4', desc:'Du panoptique à la surveillance numérique, visibilité comme dynamique organisationnelle, visibilisation en gestion de projet distribué (IJPM).' },
+  { id:'ct', name:'Cadre théorique', color:'#4CAF82', desc:'Hafermalz + Leclercq-V. + Goffman + Merleau-Ponty. Les 4 axes de tension. Pourquoi ces auteurs.' },
+  { id:'terrain', name:'Terrain', color:'#F08050', desc:'Ethnographie chez Sanofi. Entretiens formels, observations, vignettes, codage thématique.' }
+];
+
+const DEFAULT_LECTURES = [
+  { id:'l1', titre:'Exil de la présence', auteurs:'Hafermalz (2021)', statut:'lu', notes:'Infrastructure de visibilité. Concept d\'exil — être invisible = ne pas exister pour l\'organisation.', tags:['cadre-théo'], partie:'ct' },
+  { id:'l2', titre:'Seeing to be seen', auteurs:'Leclercq-Vandelannoitte', statut:'lu', notes:'Auto-contrôle et visibilité stratégique. Les individus produisent leur propre visibilité.', tags:['cadre-théo'], partie:'ct' },
+  { id:'l3', titre:'La mise en scène de la vie quotidienne', auteurs:'Goffman', statut:'en-cours', notes:'Dramaturgie, front stage / back stage. Clé pour finding 03.', tags:['cadre-théo'], partie:'ct' },
+  { id:'l4', titre:'Phénoménologie de la perception', auteurs:'Merleau-Ponty', statut:'en-cours', notes:'Invisibilité fonctionnelle. Pour agir, il faut rendre invisible beaucoup de choses.', tags:['cadre-théo'], partie:'ct' },
+  { id:'l5', titre:'Traces & visibilisation de l\'activité', auteurs:'Beauvalet', statut:'lu', notes:'Trace ≠ activité réelle. Lien direct avec la scène du PO et les tickets Jira.', tags:['cadre-théo'], partie:'ct' },
+  { id:'l6', titre:'Management désincarné', auteurs:'Dujarier (2015)', statut:'lu', notes:'Le management à distance désincarné. Outils comme substituts de la présence.', tags:['cadre-théo'], partie:'ct' },
+  { id:'l7', titre:'IJPM — 5 articles (accountability, alignment, distributed PM)', auteurs:'IJPM', statut:'à-lire', notes:'À ficher. 1 page max par article : idée principale + concept + lien terrain.', tags:['revue-lit'], partie:'rdl' },
+];
+
+const DEFAULT_TERRAIN = [
+  { id:'t1', date:'Novembre 2024', context:'Sprint review — équipe distribuée FR/IN/US', observation:'Le PO ouvre Jira et montre un board avec des tickets en Done. Il dit ne pas comprendre ce qui a réellement été livré. Plusieurs tickets sont fermés sans commentaire ni lien PR. Il demande à l\'équipe d\'expliquer — quelques secondes de silence, puis une personne énumère oralement ce qui a été fait.', verbatim:'"The ticket says done but I don\'t know what done means here."', interpretation:'Décalage entre la trace numérique et l\'activité réelle. La visibilité produite par l\'outil est incomplète — le PO doit reconstruire l\'activité par l\'oral. Ce que l\'outil invisibilise est aussi important que ce qu\'il visibilise.', tags:['visibilité','invisibilité','outils'], retrospective:true }
+];
+
+const DEFAULT_PARTIE_TASKS = [
+  { id:'pt1', name:'Lire Goffman — ch. 1 de La mise en scène', partie:'ct', done:false, date:'2025-06-15' },
+  { id:'pt2', name:'Lire Merleau-Ponty — passages sur la perception sélective', partie:'ct', done:false, date:'2025-06-15' },
+  { id:'pt3', name:'Ficher les 5 articles IJPM', partie:'rdl', done:false, date:'2025-06-20' },
+  { id:'pt4', name:'Rédiger la revue de littérature (EN)', partie:'rdl', done:false, date:'2025-06-30' },
+  { id:'pt5', name:'Rédiger le cadre théorique (EN)', partie:'ct', done:false, date:'2025-06-30' },
+  { id:'pt6', name:'Planifier les 5–6 entretiens de juillet', partie:'terrain', done:false, date:'2025-06-25' },
+  { id:'pt7', name:'Mener les entretiens formels', partie:'terrain', done:false, date:'2025-07-15' },
+  { id:'pt8', name:'Retranscrire les observations rétrospectivement', partie:'terrain', done:false, date:'2025-06-15' },
+  { id:'pt9', name:'Rédiger intro + méthodologie (EN)', partie:'terrain', done:false, date:'2025-07-31' },
+  { id:'pt10', name:'Codage thématique — 3 axes empiriques', partie:'terrain', done:false, date:'2025-08-01' },
+  { id:'pt11', name:'Rédiger les findings ch. V', partie:'terrain', done:false, date:'2025-08-10' },
+  { id:'pt12', name:'Rédiger discussion ch. VI', partie:'terrain', done:false, date:'2025-08-15' },
+];
+
+const DEFAULT_MEM_TASKS = [
+  { id:'mt1', name:'Envoyer plan détaillé au directeur', done:false, date:'2025-06-10', partie:'rdl' },
+  { id:'mt2', name:'Confirmer anonymisation terrain avec RH Sanofi', done:false, date:'2025-06-20', partie:'terrain' },
+  { id:'mt3', name:'Envoyer brouillon revue de lit. au directeur', done:false, date:'2025-07-01', partie:'rdl' },
+  { id:'mt4', name:'Relecture globale + mise en forme', done:false, date:'2025-08-20', partie:'ct' },
+  { id:'mt5', name:'Envoyer version finale au directeur (buffer 1 sem)', done:false, date:'2025-08-22', partie:'terrain' },
+];
+
+let memState = { lectures:[], terrain:[], partieTasks:[], memTasks:[] };
+let lecFilter = 'all';
+
+async function loadMemoire() {
+  try {
+    if (useFirebase) {
+      const memRef = ref(db, 'studyspace_memoire');
+      onValue(memRef, snap => {
+        const d = snap.val();
+        if (d) {
+          memState.lectures = d.lectures || DEFAULT_LECTURES;
+          memState.terrain = d.terrain || DEFAULT_TERRAIN;
+          memState.partieTasks = d.partieTasks || DEFAULT_PARTIE_TASKS;
+          memState.memTasks = d.memTasks || DEFAULT_MEM_TASKS;
+        } else {
+          memState = { lectures: DEFAULT_LECTURES, terrain: DEFAULT_TERRAIN, partieTasks: DEFAULT_PARTIE_TASKS, memTasks: DEFAULT_MEM_TASKS };
+          saveMemoire();
+        }
+        renderMemoire();
+      });
+    } else {
+      const saved = localStorage.getItem('studyspace_memoire');
+      memState = saved ? JSON.parse(saved) : { lectures: DEFAULT_LECTURES, terrain: DEFAULT_TERRAIN, partieTasks: DEFAULT_PARTIE_TASKS, memTasks: DEFAULT_MEM_TASKS };
+      renderMemoire();
+    }
+  } catch(e) {
+    memState = { lectures: DEFAULT_LECTURES, terrain: DEFAULT_TERRAIN, partieTasks: DEFAULT_PARTIE_TASKS, memTasks: DEFAULT_MEM_TASKS };
+    renderMemoire();
+  }
+}
+
+async function saveMemoire() {
+  try {
+    if (useFirebase) { await set(ref(db, 'studyspace_memoire'), memState); }
+    else { localStorage.setItem('studyspace_memoire', JSON.stringify(memState)); }
+  } catch(e) { localStorage.setItem('studyspace_memoire', JSON.stringify(memState)); }
+}
+
+window.showMemTab = function(id, btn) {
+  document.querySelectorAll('.mem-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.mem-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('mem-' + id).classList.add('active');
+  btn.classList.add('active');
+  renderMemoire();
+}
+
+function renderMemoire() {
+  renderMemOverview();
+  renderParties();
+  renderLectures();
+  renderTerrain();
+  renderMemTasks();
+}
+
+function renderMemOverview() {
+  const lu = memState.lectures.filter(l => l.statut === 'lu').length;
+  const total = memState.lectures.length;
+  const obs = memState.terrain.length;
+  const tasksDone = memState.partieTasks.filter(t => t.done).length;
+  const tasksTodo = memState.partieTasks.filter(t => !t.done).length;
+  document.getElementById('mem-stats-el').innerHTML = `
+    <div class="mem-stat"><div class="mem-stat-n">${lu}/${total}</div><div class="mem-stat-l">Lectures faites</div></div>
+    <div class="mem-stat"><div class="mem-stat-n">${obs}</div><div class="mem-stat-l">Observations terrain</div></div>
+    <div class="mem-stat"><div class="mem-stat-n">${tasksDone}</div><div class="mem-stat-l">Tâches terminées</div></div>
+    <div class="mem-stat"><div class="mem-stat-n">${tasksTodo}</div><div class="mem-stat-l">Tâches restantes</div></div>`;
+
+  document.getElementById('overview-parties').innerHTML = PARTIES.map(p => {
+    const tasks = memState.partieTasks.filter(t => t.partie === p.id);
+    const done = tasks.filter(t => t.done).length;
+    const pct = tasks.length ? Math.round(done/tasks.length*100) : 0;
+    return `<div style="margin-bottom:14px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px">
+        <span style="font-size:13px;font-weight:500">${p.name}</span>
+        <span style="font-size:12px;color:var(--text-muted)">${pct}% · ${done}/${tasks.length} tâches</span>
+      </div>
+      <div class="partie-progress"><div class="partie-progress-fill" style="width:${pct}%;background:${p.color}"></div></div>
+    </div>`;
+  }).join('');
+}
+
+function renderParties() {
+  document.getElementById('parties-list').innerHTML = PARTIES.map(p => {
+    const tasks = memState.partieTasks.filter(t => t.partie === p.id);
+    const done = tasks.filter(t => t.done).length;
+    const pct = tasks.length ? Math.round(done/tasks.length*100) : 0;
+    const status = pct === 100 ? 'done' : pct > 0 ? 'wip' : 'todo';
+    const statusLabel = { done:'Terminé', wip:'En cours', todo:'À faire' };
+    return `<div class="partie-card">
+      <div class="partie-header">
+        <div class="partie-num">${PARTIES.indexOf(p)+1}</div>
+        <div class="partie-name">${p.name}</div>
+        <span class="partie-status ${status}">${statusLabel[status]}</span>
+      </div>
+      <div class="partie-progress"><div class="partie-progress-fill" style="width:${pct}%;background:${p.color}"></div></div>
+      <div class="partie-desc">${p.desc}</div>
+      <div class="partie-tasks-mini">
+        ${tasks.sort((a,b)=>(a.date||'9999')>(b.date||'9999')?1:-1).map(t => `
+          <div class="mini-task">
+            <div class="mini-check ${t.done?'done':''}" onclick="togglePartieTask('${t.id}')"></div>
+            <span class="mini-task-name ${t.done?'done':''}">${t.name}</span>
+            <span style="font-size:11px;color:var(--text-muted)">${t.date?formatDate(t.date):''}</span>
+            <button style="background:none;border:none;cursor:pointer;color:#ccc;font-size:13px" onclick="deletePartieTask('${t.id}')">×</button>
+          </div>`).join('')}
+        <button class="btn-ghost btn" style="font-size:12px;margin-top:6px;width:fit-content" onclick="openMemModal('partie-task','${p.id}')">+ Ajouter une tâche</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+window.togglePartieTask = async function(id) {
+  const t = memState.partieTasks.find(x => x.id === id);
+  if (t) { t.done = !t.done; await saveMemoire(); renderMemoire(); }
+}
+window.deletePartieTask = async function(id) {
+  memState.partieTasks = memState.partieTasks.filter(x => x.id !== id);
+  await saveMemoire(); renderMemoire();
+}
+
+function renderLectures() {
+  const statuts = [
+    {id:'all',label:'Tout'},
+    {id:'à-lire',label:'À lire'},
+    {id:'en-cours',label:'En cours'},
+    {id:'lu',label:'Lu'}
+  ];
+  document.getElementById('lec-filters').innerHTML = statuts.map(s =>
+    `<button class="filter-btn ${lecFilter===s.id?'active':''}" onclick="setLecFilter('${s.id}')">${s.label}</button>`
+  ).join('');
+
+  const lecs = lecFilter === 'all' ? memState.lectures : memState.lectures.filter(l => l.statut === lecFilter);
+  const colors = {'à-lire':'#F08050','en-cours':'#E0A030','lu':'#4CAF82'};
+  const labels = {'à-lire':'À lire','en-cours':'En cours','lu':'Lu'};
+
+  document.getElementById('lectures-list').innerHTML = lecs.length === 0
+    ? '<div class="empty-state">Aucune référence ici</div>'
+    : lecs.map(l => `<div class="lec-card">
+        <div class="lec-status-dot" style="background:${colors[l.statut]||'#ccc'}"></div>
+        <div class="lec-body">
+          <div class="lec-title">${l.titre}</div>
+          <div class="lec-authors">${l.auteurs}</div>
+          ${l.notes?`<div class="lec-note">${l.notes}</div>`:''}
+          <div class="lec-tags">
+            <span class="lec-tag" style="background:${colors[l.statut]}18;color:${colors[l.statut]}">${labels[l.statut]}</span>
+            ${l.partie?`<span class="lec-tag" style="background:var(--bg);color:var(--text-muted)">${PARTIES.find(p=>p.id===l.partie)?.name||''}</span>`:''}
+          </div>
+        </div>
+        <div class="lec-actions">
+          <select style="font-size:11px;padding:4px 8px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--text-muted);cursor:pointer;font-family:'DM Sans',sans-serif" onchange="changeLecStatut('${l.id}',this.value)">
+            <option value="à-lire" ${l.statut==='à-lire'?'selected':''}>À lire</option>
+            <option value="en-cours" ${l.statut==='en-cours'?'selected':''}>En cours</option>
+            <option value="lu" ${l.statut==='lu'?'selected':''}>Lu</option>
+          </select>
+          <button style="background:none;border:none;cursor:pointer;color:#bbb;font-size:14px;margin-right:2px" onclick="editLecture('${l.id}')">✎</button><button style="background:none;border:none;cursor:pointer;color:#ccc;font-size:16px" onclick="deleteLecture('${l.id}')">×</button>
+        </div>
+      </div>`).join('');
+}
+
+window.setLecFilter = function(f) { lecFilter = f; renderLectures(); }
+window.changeLecStatut = async function(id, s) {
+  const l = memState.lectures.find(x => x.id === id);
+  if (l) { l.statut = s; await saveMemoire(); renderLectures(); }
+}
+window.deleteLecture = async function(id) {
+  memState.lectures = memState.lectures.filter(x => x.id !== id);
+  await saveMemoire(); renderLectures();
+}
+
+function renderTerrain() {
+  document.getElementById('terrain-count').textContent = `${memState.terrain.length} observation${memState.terrain.length!==1?'s':''}`;
+  const tagColors = {'visibilité':'#9B72D4','invisibilité':'#4CAF82','coordination':'#E0A030','outils':'#D4727E','auto-contrôle':'#5890B0','culture':'#7AAD4A','goffman':'#4CAF82','hafermalz':'#D4727E','merleau-ponty':'#5890B0'};
+  document.getElementById('terrain-list').innerHTML = memState.terrain.length === 0
+    ? '<div class="empty-state">Aucune observation pour l\'instant</div>'
+    : memState.terrain.map(e => `<div class="terrain-entry">
+        <div class="terrain-entry-header">
+          <div>
+            <div class="terrain-date">${e.date||'Sans date'}</div>
+            ${e.context?`<div class="terrain-ctx">${e.context}</div>`:''}
+          </div>
+          <div style="display:flex;gap:6px;align-items:center">
+            ${e.retrospective?`<span style="font-size:11px;padding:2px 8px;border-radius:20px;background:#FFF0D6;color:#8A5A00">rétrospectif</span>`:''}
+            <button style="background:none;border:none;cursor:pointer;color:#bbb;font-size:14px;margin-right:4px" onclick="editTerrain('${e.id}')">✎</button><button style="background:none;border:none;cursor:pointer;color:#ccc;font-size:16px" onclick="deleteTerrain('${e.id}')">×</button>
+          </div>
+        </div>
+        ${e.observation?`<div class="terrain-section-label">Observation</div><div class="terrain-text">${e.observation}</div>`:''}
+        ${e.verbatim?`<div class="terrain-verbatim">${e.verbatim}</div>`:''}
+        ${e.interpretation?`<div class="terrain-section-label">Interprétation</div><div class="terrain-text">${e.interpretation}</div>`:''}
+        ${e.questions?`<div class="terrain-section-label">Questions</div><div class="terrain-text">${e.questions}</div>`:''}
+        <div class="terrain-tags">${(e.tags||[]).map(t=>`<span class="terrain-tag" style="background:${tagColors[t]||'#ccc'}18;color:${tagColors[t]||'#888'}">${t}</span>`).join('')}</div>
+      </div>`).join('');
+}
+
+window.deleteTerrain = async function(id) {
+  memState.terrain = memState.terrain.filter(x => x.id !== id);
+  await saveMemoire(); renderTerrain();
+}
+
+function renderMemTasks() {
+  const todo = memState.memTasks.filter(t => !t.done);
+  const done = memState.memTasks.filter(t => t.done);
+  const all = [...todo.sort((a,b)=>(a.date||'9999')>(b.date||'9999')?1:-1), ...done];
+  document.getElementById('mem-tasks-count').textContent = `${todo.length} tâche${todo.length!==1?'s':''} restante${todo.length!==1?'s':''}`;
+  document.getElementById('mem-tasks-list').innerHTML = all.length === 0
+    ? '<div class="empty-state">Aucune tâche</div>'
+    : all.map(t => {
+        const dl = daysLeft(t.date);
+        let dlClass = '';
+        if (!t.done && dl !== null) { if (dl <= 1) dlClass='urgent'; else if (dl <= 5) dlClass='soon'; }
+        const p = PARTIES.find(x => x.id === t.partie);
+        return `<div class="mem-task-row ${t.done?'done':''}">
+          <div class="task-check ${t.done?'checked':''}" onclick="toggleMemTask('${t.id}')"></div>
+          <div class="mem-task-name">${t.name}</div>
+          ${p?`<span class="mem-task-partie" style="background:${p.color}18;color:${p.color}">${p.name}</span>`:''}
+          <div class="mem-task-date ${dlClass}">${t.date?formatDeadline(t.date,dl):'—'}</div>
+          <button style="background:none;border:none;cursor:pointer;color:#bbb;font-size:14px;margin-right:2px" onclick="editMemTask('${t.id}')">✎</button><button style="background:none;border:none;cursor:pointer;color:#ccc;font-size:16px" onclick="deleteMemTask('${t.id}')">×</button>
+        </div>`;
+      }).join('');
+}
+
+window.toggleMemTask = async function(id) {
+  const t = memState.memTasks.find(x => x.id === id);
+  if (t) { t.done = !t.done; await saveMemoire(); renderMemTasks(); }
+}
+window.deleteMemTask = async function(id) {
+  memState.memTasks = memState.memTasks.filter(x => x.id !== id);
+  await saveMemoire(); renderMemTasks();
+}
+
+// ── MODALS MEMOIRE ────────────────────────────
+window.openMemModal = function(type, partieId) {
+  const overlay = document.getElementById('mem-modal-overlay');
+  const content = document.getElementById('mem-modal-content');
+
+  if (type === 'lecture') {
+    content.innerHTML = `<div class="modal-title">Nouvelle référence</div>
+      <div class="form-group"><label class="form-label">Titre</label><input class="form-input" id="ml-titre" placeholder="Titre de l'article ou du livre"/></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Auteur(s)</label><input class="form-input" id="ml-auteurs" placeholder="Nom (année)"/></div>
+        <div class="form-group"><label class="form-label">Statut</label>
+          <select class="form-input" id="ml-statut"><option value="à-lire">À lire</option><option value="en-cours">En cours</option><option value="lu">Lu</option></select>
+        </div>
+      </div>
+      <div class="form-group"><label class="form-label">Partie associée</label>
+        <select class="form-input" id="ml-partie"><option value="">— Aucune —</option>${PARTIES.map(p=>`<option value="${p.id}">${p.name}</option>`).join('')}</select>
+      </div>
+      <div class="form-group"><label class="form-label">Notes / ce que ça apporte</label><textarea class="form-textarea" id="ml-notes" placeholder="Concepts clés, lien avec ton terrain, citations utiles..."></textarea></div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="closeMemModal()">Annuler</button>
+        <button class="btn btn-primary" onclick="saveLecture()">Enregistrer</button>
+      </div>`;
+
+  } else if (type === 'terrain') {
+    const TAGS = ['visibilité','invisibilité','coordination','outils','auto-contrôle','culture','goffman','hafermalz','merleau-ponty'];
+    content.innerHTML = `<div class="modal-title">Nouvelle observation</div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Date / période</label><input class="form-input" id="mt-date" placeholder="ex. Semaine du 7 juillet"/></div>
+        <div class="form-group"><label class="form-label">Contexte</label><input class="form-input" id="mt-ctx" placeholder="ex. Sprint review"/></div>
+      </div>
+      <div class="form-group"><label class="form-label">Ce que j'ai observé (faits bruts)</label><textarea class="form-textarea" id="mt-obs" placeholder="Décris la scène..."></textarea></div>
+      <div class="form-group"><label class="form-label">Verbatim</label><input class="form-input" id="mt-verb" placeholder='"ce que quelqu\'un a dit..."'/></div>
+      <div class="form-group"><label class="form-label">Interprétation provisoire</label><textarea class="form-textarea" id="mt-interp" placeholder="Ce que ça révèle..."></textarea></div>
+      <div class="form-group"><label class="form-label">Questions soulevées</label><input class="form-input" id="mt-q" placeholder="Questions que cette scène ouvre..."/></div>
+      <div class="form-group"><label class="form-label">Tags</label>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px" id="mt-tags-cloud">
+          ${TAGS.map(t=>`<button class="filter-btn" id="mtt-${t}" onclick="toggleTerrainTag('${t}')">${t}</button>`).join('')}
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="closeMemModal()">Annuler</button>
+        <button class="btn btn-primary" onclick="saveTerrain()">Enregistrer</button>
+      </div>`;
+    window._terrainTags = [];
+
+  } else if (type === 'partie-task') {
+    content.innerHTML = `<div class="modal-title">Nouvelle tâche</div>
+      <div class="form-group"><label class="form-label">Tâche</label><input class="form-input" id="mpt-name" placeholder="ex. Lire Goffman ch. 1"/></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Partie</label>
+          <select class="form-input" id="mpt-partie">${PARTIES.map(p=>`<option value="${p.id}" ${p.id===partieId?'selected':''}>${p.name}</option>`).join('')}</select>
+        </div>
+        <div class="form-group"><label class="form-label">Date limite</label><input class="form-input" id="mpt-date" type="date"/></div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="closeMemModal()">Annuler</button>
+        <button class="btn btn-primary" onclick="savePartieTask()">Enregistrer</button>
+      </div>`;
+
+  } else if (type === 'mem-task') {
+    content.innerHTML = `<div class="modal-title">Nouvelle tâche transversale</div>
+      <div class="form-group"><label class="form-label">Tâche</label><input class="form-input" id="mmt-name" placeholder="ex. Envoyer brouillon au directeur"/></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Partie associée</label>
+          <select class="form-input" id="mmt-partie"><option value="">— Aucune —</option>${PARTIES.map(p=>`<option value="${p.id}">${p.name}</option>`).join('')}</select>
+        </div>
+        <div class="form-group"><label class="form-label">Date limite</label><input class="form-input" id="mmt-date" type="date"/></div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="closeMemModal()">Annuler</button>
+        <button class="btn btn-primary" onclick="saveMemTask()">Enregistrer</button>
+      </div>`;
+  }
+
+  overlay.classList.add('open');
+}
+
+window.closeMemModal = function() {
+  document.getElementById('mem-modal-overlay').classList.remove('open');
+}
+
+window.toggleTerrainTag = function(tag) {
+  const btn = document.getElementById('mtt-' + tag);
+  if (window._terrainTags.includes(tag)) {
+    window._terrainTags = window._terrainTags.filter(t => t !== tag);
+    btn.classList.remove('active');
+  } else {
+    window._terrainTags.push(tag);
+    btn.classList.add('active');
+  }
+}
+
+window.saveLecture = async function() {
+  const titre = document.getElementById('ml-titre').value.trim();
+  if (!titre) return;
+  memState.lectures.push({ id: uid(), titre, auteurs: document.getElementById('ml-auteurs').value.trim(), statut: document.getElementById('ml-statut').value, partie: document.getElementById('ml-partie').value, notes: document.getElementById('ml-notes').value.trim(), tags:[] });
+  await saveMemoire(); closeMemModal(); renderLectures();
+}
+
+window.saveTerrain = async function() {
+  const obs = document.getElementById('mt-obs').value.trim();
+  if (!obs) return;
+  memState.terrain.unshift({ id: uid(), date: document.getElementById('mt-date').value, context: document.getElementById('mt-ctx').value.trim(), observation: obs, verbatim: document.getElementById('mt-verb').value.trim(), interpretation: document.getElementById('mt-interp').value.trim(), questions: document.getElementById('mt-q').value.trim(), tags: [...window._terrainTags], retrospective: false });
+  await saveMemoire(); closeMemModal(); renderTerrain();
+}
+
+window.savePartieTask = async function() {
+  const name = document.getElementById('mpt-name').value.trim();
+  if (!name) return;
+  memState.partieTasks.push({ id: uid(), name, partie: document.getElementById('mpt-partie').value, date: document.getElementById('mpt-date').value, done: false });
+  await saveMemoire(); closeMemModal(); renderParties(); renderMemOverview();
+}
+
+window.saveMemTask = async function() {
+  const name = document.getElementById('mmt-name').value.trim();
+  if (!name) return;
+  memState.memTasks.push({ id: uid(), name, partie: document.getElementById('mmt-partie').value, date: document.getElementById('mmt-date').value, done: false });
+  await saveMemoire(); closeMemModal(); renderMemTasks();
+}
+
+loadMemoire();
+
+// ── EDIT MEMOIRE TASKS ────────────────────────
+window.editMemTask = function(id) {
+  const t = memState.memTasks.find(x => x.id === id);
+  if (!t) return;
+  const overlay = document.getElementById('mem-modal-overlay');
+  const content = document.getElementById('mem-modal-content');
+  content.innerHTML = `<div class="modal-title">Modifier la tâche</div>
+    <div class="form-group"><label class="form-label">Tâche</label><input class="form-input" id="mmt-name" value="${t.name}"/></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Partie associée</label>
+        <select class="form-input" id="mmt-partie"><option value="">— Aucune —</option>${PARTIES.map(p=>`<option value="${p.id}" ${t.partie===p.id?'selected':''}>${p.name}</option>`).join('')}</select>
+      </div>
+      <div class="form-group"><label class="form-label">Date limite</label><input class="form-input" id="mmt-date" type="date" value="${t.date||''}"/></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeMemModal()">Annuler</button>
+      <button class="btn btn-primary" onclick="updateMemTask('${id}')">Enregistrer</button>
+    </div>`;
+  overlay.classList.add('open');
+}
+
+window.updateMemTask = async function(id) {
+  const t = memState.memTasks.find(x => x.id === id);
+  if (!t) return;
+  t.name = document.getElementById('mmt-name').value.trim() || t.name;
+  t.partie = document.getElementById('mmt-partie').value;
+  t.date = document.getElementById('mmt-date').value;
+  await saveMemoire(); closeMemModal(); renderMemTasks();
+}
+
+// ── EDIT LECTURES ─────────────────────────────
+window.editLecture = function(id) {
+  const l = memState.lectures.find(x => x.id === id);
+  if (!l) return;
+  const overlay = document.getElementById('mem-modal-overlay');
+  const content = document.getElementById('mem-modal-content');
+  content.innerHTML = `<div class="modal-title">Modifier la référence</div>
+    <div class="form-group"><label class="form-label">Titre</label><input class="form-input" id="ml-titre" value="${l.titre}"/></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Auteur(s)</label><input class="form-input" id="ml-auteurs" value="${l.auteurs||''}"/></div>
+      <div class="form-group"><label class="form-label">Statut</label>
+        <select class="form-input" id="ml-statut">
+          <option value="à-lire" ${l.statut==='à-lire'?'selected':''}>À lire</option>
+          <option value="en-cours" ${l.statut==='en-cours'?'selected':''}>En cours</option>
+          <option value="lu" ${l.statut==='lu'?'selected':''}>Lu</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group"><label class="form-label">Partie associée</label>
+      <select class="form-input" id="ml-partie"><option value="">— Aucune —</option>${PARTIES.map(p=>`<option value="${p.id}" ${l.partie===p.id?'selected':''}>${p.name}</option>`).join('')}</select>
+    </div>
+    <div class="form-group"><label class="form-label">Notes</label><textarea class="form-textarea" id="ml-notes">${l.notes||''}</textarea></div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeMemModal()">Annuler</button>
+      <button class="btn btn-primary" onclick="updateLecture('${id}')">Enregistrer</button>
+    </div>`;
+  overlay.classList.add('open');
+}
+
+window.updateLecture = async function(id) {
+  const l = memState.lectures.find(x => x.id === id);
+  if (!l) return;
+  l.titre = document.getElementById('ml-titre').value.trim() || l.titre;
+  l.auteurs = document.getElementById('ml-auteurs').value.trim();
+  l.statut = document.getElementById('ml-statut').value;
+  l.partie = document.getElementById('ml-partie').value;
+  l.notes = document.getElementById('ml-notes').value.trim();
+  await saveMemoire(); closeMemModal(); renderLectures();
+}
+
+// ── EDIT TERRAIN ──────────────────────────────
+window.editTerrain = function(id) {
+  const e = memState.terrain.find(x => x.id === id);
+  if (!e) return;
+  const TAGS = ['visibilité','invisibilité','coordination','outils','auto-contrôle','culture','goffman','hafermalz','merleau-ponty'];
+  window._terrainTags = [...(e.tags||[])];
+  const overlay = document.getElementById('mem-modal-overlay');
+  const content = document.getElementById('mem-modal-content');
+  content.innerHTML = `<div class="modal-title">Modifier l'observation</div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Date / période</label><input class="form-input" id="mt-date" value="${e.date||''}"/></div>
+      <div class="form-group"><label class="form-label">Contexte</label><input class="form-input" id="mt-ctx" value="${(e.context||'').replace(/"/g,'&quot;')}"/></div>
+    </div>
+    <div class="form-group"><label class="form-label">Observation</label><textarea class="form-textarea" id="mt-obs">${e.observation||''}</textarea></div>
+    <div class="form-group"><label class="form-label">Verbatim</label><input class="form-input" id="mt-verb" value="${(e.verbatim||'').replace(/"/g,'&quot;')}"/></div>
+    <div class="form-group"><label class="form-label">Interprétation</label><textarea class="form-textarea" id="mt-interp">${e.interpretation||''}</textarea></div>
+    <div class="form-group"><label class="form-label">Questions</label><input class="form-input" id="mt-q" value="${(e.questions||'').replace(/"/g,'&quot;')}"/></div>
+    <div class="form-group"><label class="form-label">Tags</label>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px" id="mt-tags-cloud">
+        ${TAGS.map(t=>`<button class="filter-btn ${(e.tags||[]).includes(t)?'active':''}" id="mtt-${t}" onclick="toggleTerrainTag('${t}')">${t}</button>`).join('')}
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeMemModal()">Annuler</button>
+      <button class="btn btn-primary" onclick="updateTerrain('${id}')">Enregistrer</button>
+    </div>`;
+  overlay.classList.add('open');
+}
+
+window.updateTerrain = async function(id) {
+  const e = memState.terrain.find(x => x.id === id);
+  if (!e) return;
+  e.date = document.getElementById('mt-date').value;
+  e.context = document.getElementById('mt-ctx').value.trim();
+  e.observation = document.getElementById('mt-obs').value.trim();
+  e.verbatim = document.getElementById('mt-verb').value.trim();
+  e.interpretation = document.getElementById('mt-interp').value.trim();
+  e.questions = document.getElementById('mt-q').value.trim();
+  e.tags = [...window._terrainTags];
+  await saveMemoire(); closeMemModal(); renderTerrain();
+}
 </script>
 </body>
 </html>
