@@ -464,6 +464,84 @@
     <div class="filters" id="filters"></div>
     <div class="tasks-table" id="tasks-table"></div>
   </div>
+
+<!-- VUE MEMOIRE -->
+<div class="view" id="view-memoire">
+  <div class="page-header">
+    <div>
+      <div class="page-title">Mémoire</div>
+      <div class="page-sub">Master 128 · MBC · Dauphine — dir. F.-X. de Vaujany</div>
+    </div>
+  </div>
+
+  <div class="mem-tabs">
+    <button class="mem-tab active" onclick="showMemTab('overview',this)">Vue d'ensemble</button>
+    <button class="mem-tab" onclick="showMemTab('parties',this)">Les 3 parties</button>
+    <button class="mem-tab" onclick="showMemTab('lectures',this)">Lectures</button>
+    <button class="mem-tab" onclick="showMemTab('terrain',this)">Terrain</button>
+    <button class="mem-tab" onclick="showMemTab('taches',this)">Tâches</button>
+  </div>
+
+  <!-- OVERVIEW -->
+  <div class="mem-section active" id="mem-overview">
+    <div class="mem-stats" id="mem-stats-el"></div>
+    <div class="mem-info-grid">
+      <div class="mem-info-card">
+        <div class="mem-info-label">Problématique</div>
+        <div class="mem-info-value" style="font-style:italic">How is activity made visible and coordinated in distributed digital projects, and how do these visibility mechanisms redefine forms of self-control and individual engagement?</div>
+      </div>
+      <div class="mem-info-card">
+        <div class="mem-info-label">Infos clés</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px">
+          <div><span class="mem-info-label" style="display:inline">Directeur</span> <span class="mem-info-value" style="display:inline">F.-X. de Vaujany</span></div>
+          <div><span class="mem-info-label" style="display:inline">Terrain</span> <span class="mem-info-value" style="display:inline">Sanofi — équipes FR/IN/US</span></div>
+          <div><span class="mem-info-label" style="display:inline">Rendu</span> <span class="mem-info-value" style="display:inline">Fin août 2025</span></div>
+          <div><span class="mem-info-label" style="display:inline">Langue</span> <span class="mem-info-value" style="display:inline">Anglais</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="mem-info-card">
+      <div class="mem-info-label" style="margin-bottom:12px">Avancement des 3 parties</div>
+      <div id="overview-parties"></div>
+    </div>
+  </div>
+
+  <!-- PARTIES -->
+  <div class="mem-section" id="mem-parties">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+      <div style="font-size:13px;color:var(--text-muted)">Clique sur une tâche pour la cocher</div>
+      <button class="btn btn-primary" onclick="openMemModal('partie-task')">+ Tâche</button>
+    </div>
+    <div id="parties-list"></div>
+  </div>
+
+  <!-- LECTURES -->
+  <div class="mem-section" id="mem-lectures">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <div class="lecture-filters" id="lec-filters"></div>
+      <button class="btn btn-primary" onclick="openMemModal('lecture')">+ Référence</button>
+    </div>
+    <div id="lectures-list"></div>
+  </div>
+
+  <!-- TERRAIN -->
+  <div class="mem-section" id="mem-terrain">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+      <div style="font-size:13px;color:var(--text-muted)" id="terrain-count"></div>
+      <button class="btn btn-primary" onclick="openMemModal('terrain')">+ Observation</button>
+    </div>
+    <div id="terrain-list"></div>
+  </div>
+
+  <!-- TACHES -->
+  <div class="mem-section" id="mem-taches">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+      <div style="font-size:13px;color:var(--text-muted)" id="mem-tasks-count"></div>
+      <button class="btn btn-primary" onclick="openMemModal('mem-task')">+ Tâche</button>
+    </div>
+    <div id="mem-tasks-list"></div>
+  </div>
+</div>
 </main>
 
 
@@ -547,83 +625,6 @@
 .form-textarea:focus { outline:none; border-color:#aaa; }
 </style>
 
-<!-- VUE MEMOIRE -->
-<div class="view" id="view-memoire">
-  <div class="page-header">
-    <div>
-      <div class="page-title">Mémoire</div>
-      <div class="page-sub">Master 128 · MBC · Dauphine — dir. F.-X. de Vaujany</div>
-    </div>
-  </div>
-
-  <div class="mem-tabs">
-    <button class="mem-tab active" onclick="showMemTab('overview',this)">Vue d'ensemble</button>
-    <button class="mem-tab" onclick="showMemTab('parties',this)">Les 3 parties</button>
-    <button class="mem-tab" onclick="showMemTab('lectures',this)">Lectures</button>
-    <button class="mem-tab" onclick="showMemTab('terrain',this)">Terrain</button>
-    <button class="mem-tab" onclick="showMemTab('taches',this)">Tâches</button>
-  </div>
-
-  <!-- OVERVIEW -->
-  <div class="mem-section active" id="mem-overview">
-    <div class="mem-stats" id="mem-stats-el"></div>
-    <div class="mem-info-grid">
-      <div class="mem-info-card">
-        <div class="mem-info-label">Problématique</div>
-        <div class="mem-info-value" style="font-style:italic">How is activity made visible and coordinated in distributed digital projects, and how do these visibility mechanisms redefine forms of self-control and individual engagement?</div>
-      </div>
-      <div class="mem-info-card">
-        <div class="mem-info-label">Infos clés</div>
-        <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px">
-          <div><span class="mem-info-label" style="display:inline">Directeur</span> <span class="mem-info-value" style="display:inline">F.-X. de Vaujany</span></div>
-          <div><span class="mem-info-label" style="display:inline">Terrain</span> <span class="mem-info-value" style="display:inline">Sanofi — équipes FR/IN/US</span></div>
-          <div><span class="mem-info-label" style="display:inline">Rendu</span> <span class="mem-info-value" style="display:inline">Fin août 2025</span></div>
-          <div><span class="mem-info-label" style="display:inline">Langue</span> <span class="mem-info-value" style="display:inline">Anglais</span></div>
-        </div>
-      </div>
-    </div>
-    <div class="mem-info-card">
-      <div class="mem-info-label" style="margin-bottom:12px">Avancement des 3 parties</div>
-      <div id="overview-parties"></div>
-    </div>
-  </div>
-
-  <!-- PARTIES -->
-  <div class="mem-section" id="mem-parties">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
-      <div style="font-size:13px;color:var(--text-muted)">Clique sur une tâche pour la cocher</div>
-      <button class="btn btn-primary" onclick="openMemModal('partie-task')">+ Tâche</button>
-    </div>
-    <div id="parties-list"></div>
-  </div>
-
-  <!-- LECTURES -->
-  <div class="mem-section" id="mem-lectures">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-      <div class="lecture-filters" id="lec-filters"></div>
-      <button class="btn btn-primary" onclick="openMemModal('lecture')">+ Référence</button>
-    </div>
-    <div id="lectures-list"></div>
-  </div>
-
-  <!-- TERRAIN -->
-  <div class="mem-section" id="mem-terrain">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
-      <div style="font-size:13px;color:var(--text-muted)" id="terrain-count"></div>
-      <button class="btn btn-primary" onclick="openMemModal('terrain')">+ Observation</button>
-    </div>
-    <div id="terrain-list"></div>
-  </div>
-
-  <!-- TACHES -->
-  <div class="mem-section" id="mem-taches">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
-      <div style="font-size:13px;color:var(--text-muted)" id="mem-tasks-count"></div>
-      <button class="btn btn-primary" onclick="openMemModal('mem-task')">+ Tâche</button>
-    </div>
-    <div id="mem-tasks-list"></div>
-  </div>
-</div>
 
 <!-- MODAL MEMOIRE -->
 <div class="modal-overlay" id="mem-modal-overlay" onclick="if(event.target===this)closeMemModal()">
