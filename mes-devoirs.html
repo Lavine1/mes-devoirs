@@ -1823,11 +1823,3 @@ window.saveMemInfo = async function() {
   renderMemOverview();
   toast('Infos mises à jour !');
 }
-  e.interpretation = document.getElementById('mt-interp').value.trim();
-  e.questions = document.getElementById('mt-q').value.trim();
-  e.tags = [...window._terrainTags];
-  await saveMemoire(); closeMemModal(); renderTerrain();
-}
-</script>
-</body>
-</html>
